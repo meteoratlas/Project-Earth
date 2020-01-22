@@ -4,7 +4,7 @@ export default class Grid extends PIXI.Graphics {
     constructor(x, y, width, height) {
         super();
         this.clear();
-        this.beginFill(0xffffff);
+        this.beginFill(0xffffff, 0.5);
         this.drawRect(x, y, width, height);
         this.endFill();
 

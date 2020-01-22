@@ -7,6 +7,8 @@ import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
 import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
+import bg1 from "../resources/bg1.png";
+
 export default class Game {
     constructor(app, props) {
         this.app = app;
@@ -18,6 +20,14 @@ export default class Game {
     }
     start() {
         const root = new PIXI.Container();
+
+        const bg = PIXI.Sprite.from(bg1);
+        bg.zIndex = -1;
+        bg.scale = new PIXI.Point(1.2, 1.2);
+        // bg.width = this.app.width;
+        // bg.height = this.app.height;
+        root.addChild(bg);
+
         const container = new PIXI.Container();
         root.addChild(container);
         this.app.stage.addChild(root);
