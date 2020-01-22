@@ -27,13 +27,26 @@ export default class Transforms {
         }
         return newCoords;
     }
-    static reflect(coords, axis) {
+    // https://math.stackexchange.com/questions/1013230/how-to-find-coordinates-of-reflected-point
+    // for reflect over line ax+by+c
+    static reflect(coords, a, b, c) {
         coords = coords.concat();
-        const xy = axis === this.HORIZONTAL ? 0 : 1;
+        let newCoords = [];
+        const aSq = a * a;
+        const bSq = b * b;
         for (let i = 0; i < coords.length; i += 2) {
-            coords[i + xy] *= -1;
+            newCoords[i] =
+                ((bSq - aSq) * coords[i] -
+                    2 * a * b * coords[i + 1] -
+                    2 * a * c) /
+                (aSq + bSq);
+            newCoords[i + 1] =
+                ((aSq - bSq) * coords[i + 1] -
+                    2 * a * b * coords[i] -
+                    2 * b * c) /
+                (aSq + bSq);
         }
-        return coords;
+        return newCoords;
     }
     static HORIZONTAL = "HORIZONTAL";
     static VERTICAL = "VERTICAL";
