@@ -48,8 +48,8 @@ class App extends Component {
                     <canvas ref={this.canvasRef} />
                     <TestMenu
                         hidden={false}
-                        moveUp={() => this.move(0, -1)}
-                        moveDown={() => this.move(0, 1)}
+                        moveUp={() => this.move(0, 1)}
+                        moveDown={() => this.move(0, -1)}
                         moveLeft={() => this.move(-1, 0)}
                         moveRight={() => this.move(1, 0)}
                         rotL={() => this.rotate(-90, 0, 0)}

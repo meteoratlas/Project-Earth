@@ -40,11 +40,15 @@
     margin: 0;
     padding: 0;
 }
-button {
+.btn-group{
+    display:flex;
+    justify-content:center;
 }
-#app-container {
-    /* width: 80%; */
+.btn { 
+    width: 30%;
+    margin: 5px; 
 }
+
 #game-container {
     position: relative;
 }
