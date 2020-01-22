@@ -1,10 +1,17 @@
 export default class Util {
-    // TODO: hold off on testing these functions for now, they might change
     static worldToLocal(coords) {
-        return coords.map((n, i) => (i % 2 !== 0 ? -n : n));
+        return coords.map((n, i) => {
+            if (i % 2 !== 0) n *= -1;
+            n -= 10;
+            return n;
+        });
     }
     static localToWorld(coords) {
-        return coords.map(n => n + 10);
+        return coords.map((n, i) => {
+            if (i % 2 !== 0) n *= -1;
+            n += 10;
+            return n;
+        });
     }
     // Should only work for a triangle right now
     static checkWin(playerCoords, goalCoords) {
