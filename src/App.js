@@ -40,10 +40,7 @@ class App extends Component {
     render() {
         return (
             <div id="app-container">
-                <h3>(Ver 2) Temporary Controls</h3>
-                <p>Use the arrow keys to translate</p>
-                <p>Use Q and E to rotate</p>
-                <p>Use H and V to reflect</p>
+                <h3>Transformation Game</h3>
                 <div id="game-container">
                     <canvas ref={this.canvasRef} />
                     <TestMenu

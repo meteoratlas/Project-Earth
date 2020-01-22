@@ -20,7 +20,7 @@ export default class Util {
     }
     // check to ensure player stays within the grid
     static checkIfInGrid(coords, gridMax) {
-        return coords.every(i => i <= Math.abs(gridMax));
+        return coords.every(i => Math.abs(i) <= gridMax);
     }
     // need to test thoroughly
     static pointInTri(coords, px, py) {

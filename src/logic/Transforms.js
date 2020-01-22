@@ -28,7 +28,7 @@ export default class Transforms {
         return newCoords;
     }
     // https://math.stackexchange.com/questions/1013230/how-to-find-coordinates-of-reflected-point
-    // for reflect over line ax+by+c
+    // for reflect over line ax+by=c
     static reflect(coords, a, b, c) {
         coords = coords.concat();
         let newCoords = [];
