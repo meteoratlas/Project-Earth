@@ -13,11 +13,15 @@ class TestMenu extends Component {
         <h3>Translate</h3>
 
         {/* display arrows, changed direction in ccs */}
-        <Arrow className="icon" id="idArrowUp" alt="Move Up" onClick={this.props.moveUp}/>
+      <div className="icon-group">
+        <div><Arrow className="icon" id="idArrowUp" alt="Move Up" onClick={this.props.moveUp}/></div>
+        <br/>
+        <div>
         <Arrow className="icon" id="idArrowLeft" alt="Move Left" onClick={this.props.moveLeft}/>
         <Arrow className="icon" id="idArrowRight" alt="Move Right" onClick={this.props.moveRight}/>
+        </div>
         <Arrow className="icon" id="idArrowDown" alt="Move Down" onClick={this.props.moveDown}/>
-
+      </div>
         {/* <button className="btn btn-primary" onClick={this.props.moveUp}>
           Up
         </button>
