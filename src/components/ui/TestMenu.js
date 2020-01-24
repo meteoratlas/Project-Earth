@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {ReactComponent as Arrow} from "./triangle.svg"
 
 class TestMenu extends Component {
   constructor(props) {
@@ -11,7 +12,13 @@ class TestMenu extends Component {
       <div id="sidebar" className={this.props.hidden ? "hidden" : ""}>
         <h3>Translate</h3>
 
-        <button className="btn btn-primary" onClick={this.props.moveUp}>
+        {/* display arrows, changed direction in ccs */}
+        <Arrow className="icon" id="idArrowUp" alt="Move Up" onClick={this.props.moveUp}/>
+        <Arrow className="icon" id="idArrowLeft" alt="Move Left" onClick={this.props.moveLeft}/>
+        <Arrow className="icon" id="idArrowRight" alt="Move Right" onClick={this.props.moveRight}/>
+        <Arrow className="icon" id="idArrowDown" alt="Move Down" onClick={this.props.moveDown}/>
+
+        {/* <button className="btn btn-primary" onClick={this.props.moveUp}>
           Up
         </button>
 
@@ -24,7 +31,9 @@ class TestMenu extends Component {
 
         <button className="btn btn-primary" onClick={this.props.moveRight}>
           Right
-        </button>
+        </button> */}
+
+        
         <h3>Rotate</h3>
         <button className="btn btn-primary" onClick={this.props.rotL}>
           90 Left
