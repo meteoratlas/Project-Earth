@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export default class Util {
     static worldToLocal(coords) {
         return coords.map((n, i) => {
@@ -13,18 +15,28 @@ export default class Util {
             return n;
         });
     }
-    // Should only work for a triangle right now
     static checkWin(playerCoords, goalCoords) {
         if (playerCoords.length !== goalCoords.length) return false;
-        return playerCoords.every((c, i) => c === goalCoords[i]);
+
+        playerCoords = _.chunk(playerCoords, 2);
+        goalCoords = _.chunk(goalCoords, 2);
+
+        if (
+            _(playerCoords)
+                .differenceWith(goalCoords, _.isEqual)
+                .isEmpty()
+        ) {
+            return true;
+        }
+        return false;
     }
     // check to ensure player stays within the grid
     static checkIfInGrid(coords, gridMax) {
-        return coords.every(i => i <= Math.abs(gridMax));
+        return coords.every(i => Math.abs(i) <= gridMax);
     }
     // need to test thoroughly
     static pointInTri(coords, px, py) {
-        const [x1, y1, x2, y2, x3, y3] = this.worldToLocal(coords);
+        const [x1, y1, x2, y2, x3, y3] = coords;
         const origArea = Math.abs(
             (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)
         );

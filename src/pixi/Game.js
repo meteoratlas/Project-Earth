@@ -94,6 +94,10 @@ export default class Game {
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     onMoveComplete = () => {
+        if (!Util.checkIfInGrid(this.tri.coords, 10)) {
+            alert("YOU WENT OUTSIDE THE GRID");
+        }
+
         for (let i in this.entities) {
             if (Util.pointInTri(this.tri.coords, i.x, i.y)) {
             }
