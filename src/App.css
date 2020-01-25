@@ -40,11 +40,15 @@
     margin: 0;
     padding: 0;
 }
-button {
+.btn-group{
+    display:flex;
+    justify-content:center;
 }
-#app-container {
-    /* width: 80%; */
+.btn { 
+    width: 30%;
+    margin: 5px; 
 }
+
 #game-container {
     position: relative;
 }
@@ -55,4 +59,36 @@ canvas {
 
 .hidden {
     display: none !important;
+}
+.icon-group{
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+	height: 5rem;
+	align-self: center;
+	margin: 10px;
+	opacity: 1;
+	/* fill: #cccbca; */
+}
+
+/* <div>Icons made by <a href="https://www.flaticon.com/authors/bqlqn" title="bqlqn">bqlqn</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */
+
+#idArrowUp{
+    transform: rotateZ(270deg);
+}
+
+#idArrowLeft{
+    transform: rotateZ(180deg);
+}
+
+/* #idArrowRight{
+    transform: rotateZ(270deg);
+} */
+
+
+
+#idArrowDown{
+    transform: rotateZ(90deg);
 }
