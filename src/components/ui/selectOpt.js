@@ -4,7 +4,7 @@ export default class OptionComp extends Component {
 	render() {
 		// populates arrays of values for the options
 		let num = [];
-		for (let i = 0; i <= 10; i++) {
+		for (let i = 1; i <= 10; i++) {
 			num.push(i);
 		}	
 		

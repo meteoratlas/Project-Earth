@@ -78,6 +78,9 @@ canvas {
 	opacity: 1;
 	/* fill: #cccbca; */
 }
+.icon:hover{
+    cursor:grab;
+}
 .custom-select{
     width: 80%;
     height: 80%;
@@ -85,9 +88,12 @@ canvas {
     align-self: center;
     font-size: large;
 }
+.custom-select:hover{
+    cursor:grab;
+}
 
 /* <div>Icons made by <a href="https://www.flaticon.com/authors/bqlqn" title="bqlqn">bqlqn</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */
-
+/* <div>Icons made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */
 #idArrowUp{
     transform: rotateZ(270deg);
 }
@@ -99,6 +105,10 @@ canvas {
 /* #idArrowRight{
     transform: rotateZ(270deg);
 } */
+
+#idReflectX{
+    transform: rotateZ(90deg); 
+}
 
 
 
