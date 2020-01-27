@@ -41,7 +41,7 @@ export default class GridNumbers extends PIXI.Container {
             t.x = centreX + visOffset;
             t.y = i * cellSize - visOffset / 8;
             numbers.push(t);
-            var bubble = new PIXI.Graphics();
+            bubble = new PIXI.Graphics();
             bubble.beginFill(0xee22ee); // sets color
             bubble.drawCircle(t.x - 5, t.y + 19, 4); // drawCircle(x, y, radius)
             bubble.endFill();

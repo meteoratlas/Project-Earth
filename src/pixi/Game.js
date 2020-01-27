@@ -76,28 +76,34 @@ export default class Game {
     }
     translate(dx, dy) {
         if (!this.allowMove) return;
+        this.allowMove = false;
         const t = Transforms.translate(this.tri.coords, dx, dy);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     rotate(a, oX, oY) {
         if (!this.allowMove) return;
+        this.allowMove = false;
         const t = Transforms.rotate(this.tri.coords, a, oX, oY);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     reflect(a, b, c) {
         if (!this.allowMove) return;
+        this.allowMove = false;
         const t = Transforms.reflect(this.tri.coords, a, b, c);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     loadLevel(levelIndex, json) {
         this.transition.transitionOut(() => {
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
-            this.transition.transitionIn();
+            this.transition.transitionIn(() => {
+                this.allowMove = true;
+            });
         });
     }
     onMoveComplete = () => {
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
+            this.allowMove = false;
             this.loadLevel(this.currentLevel, levels);
         }
 
@@ -113,7 +119,14 @@ export default class Game {
         }
     };
     levelComplete() {
-        console.log("You win!");
-        this.transition.transitionIn(0);
+        console.log("You win");
+        this.transition.transitionOut(() => {
+            if (this.currentLevel === 1) {
+                this.currentLevel++;
+            } else {
+                this.currentLevel = 1;
+            }
+            this.loadLevel(this.currentLevel);
+        });
     }
 }

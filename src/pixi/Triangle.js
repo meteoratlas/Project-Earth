@@ -38,7 +38,7 @@ export default class Triangle extends PIXI.Graphics {
         let c = Util.localToWorld(this.coords);
         const size = this.cellSize;
         this.clear();
-        this.beginFill(0xff0000);
+        this.beginFill(0xee4444);
         this.lineStyle(2);
         this.moveTo(c[0] * size, c[1] * size);
         this.lineTo(c[2] * size, c[3] * size);

@@ -40,13 +40,12 @@ class App extends Component {
     render() {
         return (
             <div id="app-container">
-                <h3>Transformation Game</h3>
                 <div id="game-container">
                     <canvas ref={this.canvasRef} />
                     <TestMenu
                         hidden={false}
                         moves={this.move}
-                        rotates ={this.rotate}
+                        rotates={this.rotate}
                         reflects={this.reflect}
                         // moveUp={() => this.move(0, 1)}
                         // moveDown={() => this.move(0, -1)}

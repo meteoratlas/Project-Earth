@@ -21,14 +21,9 @@ export default class Util {
         playerCoords = _.chunk(playerCoords, 2);
         goalCoords = _.chunk(goalCoords, 2);
 
-        if (
-            _(playerCoords)
-                .differenceWith(goalCoords, _.isEqual)
-                .isEmpty()
-        ) {
-            return true;
-        }
-        return false;
+        return _(playerCoords)
+            .differenceWith(goalCoords, _.isEqual)
+            .isEmpty();
     }
     // check to ensure player stays within the grid
     static checkIfInGrid(coords, gridMax) {
