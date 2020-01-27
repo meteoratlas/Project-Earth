@@ -34,7 +34,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 25%;
+    width: 50%;
     height: 100%;
     background-color: coral;
     margin: 0;
@@ -65,10 +65,13 @@ canvas {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
+    align-items: center;
 }
 .icon-grid{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
 }
 
 .icon {
@@ -81,6 +84,7 @@ canvas {
 .icon:hover{
     cursor:grab;
 }
+
 .custom-select{
     width: 80%;
     height: 80%;
