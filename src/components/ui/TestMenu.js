@@ -51,7 +51,7 @@ class TestMenu extends Component {
               onClick={this.sendInput}
             />
           </div>
-          <div className="icon-grip">
+          <div className="icon-grid">
             <Arrow
               className="icon"
               id="idArrowLeft"
