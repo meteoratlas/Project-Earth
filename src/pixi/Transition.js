@@ -12,7 +12,7 @@ export default class Transition extends PIXI.Graphics {
         this.triWidth = 80;
         this.triHeight = height / this.tris;
         this.time = 1;
-        this.delay = 0.5;
+        this.delay = 0.4;
 
         this.beginFill(0x000000);
         this.drawRect(0, 0, width, height);
@@ -25,28 +25,35 @@ export default class Transition extends PIXI.Graphics {
             );
             this.lineTo(width, this.triHeight * i + this.triHeight);
         }
+        for (let i = 0; i < this.tris; i++) {
+            this.moveTo(0, i * this.triHeight);
+            this.lineTo(
+                -this.triWidth,
+                this.triHeight * i + this.triHeight / 2
+            );
+            this.lineTo(0, this.triHeight * i + this.triHeight);
+        }
         this.closePath();
         this.endFill();
     }
-    transitionIn(pos) {
+    transitionIn(callback = () => {}) {
+        this.x = 0;
         gsap.to(this, {
-            x: pos,
+            x: this.width + this.triWidth,
             duration: this.time,
             delay: this.delay,
             ease: "quint-inout",
-            onComplete: this.transitionDone
+            onComplete: callback
         });
     }
-    transitionOut(pos) {
+    transitionOut(callback = () => {}) {
+        this.x = -this.width - this.triWidth;
         gsap.to(this, {
-            x: pos,
+            x: 0,
             duration: this.time,
             delay: this.delay,
             ease: "quint-inout",
-            onComplete: this.transitionDone
+            onComplete: callback
         });
-    }
-    transitionDone() {
-        //
     }
 }

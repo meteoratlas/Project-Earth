@@ -1,12 +1,13 @@
 import * as PIXI from "pixi.js-legacy";
 import Triangle from "./Triangle";
 import Transition from "./Transition";
-import keyboard from "../logic/Keyboard";
 import Grid from "./Grid";
 import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
 import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
+import Pickup from "./Pickup";
+import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
 
 export default class Game {
@@ -17,6 +18,7 @@ export default class Game {
         this.goal = undefined;
         this.allowMove = true;
         this.transition = new Transition(1024, 576);
+        this.currentLevel = 1;
     }
     start() {
         const root = new PIXI.Container();
@@ -51,6 +53,8 @@ export default class Game {
         container.addChild(this.goal);
         container.addChild(this.tri);
 
+        container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
+
         this.app.stage.addChild(this.transition);
 
         // Move container to the center
@@ -60,14 +64,6 @@ export default class Game {
         // Center sprite in local container coordinates
         container.pivot.x = container.width / 2;
         container.pivot.y = container.height / 2;
-
-        console.log(
-            `Point is in the triangle:${Util.pointInTri(
-                this.tri.coords,
-                2,
-                -2
-            )}`
-        );
 
         // Listen for animate update
         this.app.ticker.add(delta => {
@@ -93,9 +89,16 @@ export default class Game {
         const t = Transforms.reflect(this.tri.coords, a, b, c);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
+    loadLevel(levelIndex, json) {
+        this.transition.transitionOut(() => {
+            this.tri.coords = levels[levelIndex]["playerCoords"].concat();
+            this.transition.transitionIn();
+        });
+    }
     onMoveComplete = () => {
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
-            alert("YOU WENT OUTSIDE THE GRID");
+            // went outside the grid
+            this.loadLevel(this.currentLevel, levels);
         }
 
         for (let i in this.entities) {
