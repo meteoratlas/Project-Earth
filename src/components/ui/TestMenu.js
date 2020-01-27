@@ -29,8 +29,6 @@ class TestMenu extends Component {
         return (
             // <div id="sidebar" className={this.props.hidden ? "hidden" : ""}>
             <div id="sidebar" className="sidebar">
-                <h3>CONTROLS</h3>
-
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
                     <div className="icon-grid">

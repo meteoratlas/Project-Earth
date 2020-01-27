@@ -48,14 +48,6 @@ class App extends Component {
                         moves={this.move}
                         rotates ={this.rotate}
                         reflects={this.reflect}
-                        // moveUp={() => this.move(0, 1)}
-                        // moveDown={() => this.move(0, -1)}
-                        // moveLeft={() => this.move(-1, 0)}
-                        // moveRight={() => this.move(1, 0)}
-                        // rotL={() => this.rotate(-90, 0, 0)}
-                        // rotR={() => this.rotate(90, 0, 0)}
-                        // reflectX={() => this.reflect(0, 1, 0)}
-                        // reflectY={() => this.reflect(1, 0, 0)}
                     />
                 </div>
             </div>

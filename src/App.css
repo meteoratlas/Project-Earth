@@ -59,9 +59,6 @@ body {
     margin: 5px;
 }
 
-#app-container {
-}
-
 #game-container {
     position: relative;
     display: inline-block;
@@ -78,6 +75,7 @@ canvas {
 
 .icon-group {
     display: grid;
+    height: 40%;
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
@@ -90,17 +88,20 @@ canvas {
 }
 
 .icon {
-    height: 5rem;
+    height: 4rem;
     align-self: center;
     margin: 10px;
     opacity: 1;
-    /* fill: #cccbca; */
+    /* fill: blue; */
 }
 .icon:hover {
     cursor: pointer;
 }
+select{
+    font-size: xx-large !important;
+    text-align: center;
+}
 .custom-select{
-
     width: 80%;
     height: 80%;
     justify-self: center;
