@@ -2,6 +2,12 @@
     text-align: center;
 }
 
+html,
+body {
+    background-color: black;
+    height: 100%;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
@@ -34,71 +40,80 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 25%;
+    width: 33%;
     height: 100%;
-    background-color: coral;
+    background-color: rgb(255, 255, 255, 0.3);
     margin: 0;
     padding: 0;
 }
-.btn-group{
-    display:flex;
-    justify-content:center;
+#sidebar h3 {
+    text-align: center;
+    text-decoration: underline;
 }
-.btn { 
+.btn-group {
+    display: flex;
+    justify-content: center;
+}
+.btn {
     width: 30%;
-    margin: 5px; 
+    margin: 5px;
+}
+
+#app-container {
 }
 
 #game-container {
     position: relative;
+    display: inline-block;
+    height: 100%;
 }
 
 canvas {
-    width: 80%;
+    width: 100%;
 }
 
 .hidden {
     display: none !important;
 }
 
-.icon-group{
+.icon-group {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
 }
-.icon-grid{
+.icon-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .icon {
-	height: 5rem;
-	align-self: center;
-	margin: 10px;
-	opacity: 1;
-	/* fill: #cccbca; */
+    height: 5rem;
+    align-self: center;
+    margin: 10px;
+    opacity: 1;
+    /* fill: #cccbca; */
 }
-.icon:hover{
-    cursor:grab;
+.icon:hover {
+    cursor: pointer;
 }
-.custom-select{
+.custom-select {
     width: 80%;
     height: 80%;
     justify-self: center;
     align-self: center;
     font-size: large;
 }
-.custom-select:hover{
-    cursor:grab;
+.custom-select:hover {
+    cursor: grab;
 }
 
 /* <div>Icons made by <a href="https://www.flaticon.com/authors/bqlqn" title="bqlqn">bqlqn</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */
 /* <div>Icons made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */
-#idArrowUp{
+#idArrowUp {
     transform: rotateZ(270deg);
 }
 
-#idArrowLeft{
+#idArrowLeft {
     transform: rotateZ(180deg);
 }
 
@@ -106,12 +121,10 @@ canvas {
     transform: rotateZ(270deg);
 } */
 
-#idReflectX{
-    transform: rotateZ(90deg); 
+#idReflectX {
+    transform: rotateZ(90deg);
 }
 
-
-
-#idArrowDown{
+#idArrowDown {
     transform: rotateZ(90deg);
 }
