@@ -67,7 +67,7 @@ export default class Game {
         container.pivot.x = container.width / 2;
         container.pivot.y = container.height / 2;
 
-        this.message = new Message("", 300, 400, 3000);
+        this.message = new Message("", 300, 400, 2000);
         this.app.stage.addChild(this.message);
 
         // Listen for animate update
@@ -110,6 +110,7 @@ export default class Game {
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
             this.allowMove = false;
+            this.message.setText("Went outside grid!");
             this.loadLevel(this.currentLevel, levels);
         }
 
