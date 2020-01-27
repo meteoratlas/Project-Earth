@@ -10,6 +10,10 @@ export default class Goal extends PIXI.Graphics {
         this.cellSize = cellSize;
         this.draw();
     }
+    setCoords(coords) {
+        this.coords = coords;
+        this.draw();
+    }
     draw() {
         let c = Util.localToWorld(this.coords);
         const size = this.cellSize;

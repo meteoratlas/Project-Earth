@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js-legacy";
 import Triangle from "./Triangle";
 import Transition from "./Transition";
+import Message from "./Message";
 import Grid from "./Grid";
 import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
@@ -16,6 +17,7 @@ export default class Game {
         this.entities = [];
         this.tri = undefined;
         this.goal = undefined;
+        this.message = undefined;
         this.allowMove = true;
         this.transition = new Transition(1024, 576);
         this.currentLevel = 1;
@@ -65,6 +67,9 @@ export default class Game {
         container.pivot.x = container.width / 2;
         container.pivot.y = container.height / 2;
 
+        this.message = new Message("", 300, 400, 3000);
+        this.app.stage.addChild(this.message);
+
         // Listen for animate update
         this.app.ticker.add(delta => {
             // use delta to create frame-independent transform
@@ -95,6 +100,7 @@ export default class Game {
     loadLevel(levelIndex, json) {
         this.transition.transitionOut(() => {
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
+            this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
             this.transition.transitionIn(() => {
                 this.allowMove = true;
             });
@@ -119,14 +125,14 @@ export default class Game {
         }
     };
     levelComplete() {
-        console.log("You win");
-        this.transition.transitionOut(() => {
-            if (this.currentLevel === 1) {
-                this.currentLevel++;
-            } else {
-                this.currentLevel = 1;
-            }
-            this.loadLevel(this.currentLevel);
-        });
+        this.message.setText("You Win!");
+        this.allowMove = false;
+        if (this.currentLevel >= 2) {
+            this.currentLevel = 1;
+        } else {
+            this.currentLevel++;
+        }
+
+        this.loadLevel(this.currentLevel);
     }
 }
