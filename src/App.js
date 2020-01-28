@@ -4,6 +4,7 @@ import TestMenu from "./components/ui/TestMenu";
 import Game from "./pixi/Game";
 import Transforms from "./logic/Transforms";
 import "./App.css";
+import "./TransTable.css";
 
 class App extends Component {
     constructor(props) {
@@ -28,13 +29,13 @@ class App extends Component {
             this.game.start();
         }, 5);
     }
-    move = (x, y) => {
+    move =  (x, y) => {
         this.game.translate(x, y);
     };
-    rotate = (a, oX, oY) => {
+    rotate =  (a, oX, oY) => {
         this.game.rotate(a, oX, oY);
     };
-    reflect = (a, b, c) => {
+    reflect =  (a, b, c) => {
         this.game.reflect(a, b, c);
     };
     render() {
