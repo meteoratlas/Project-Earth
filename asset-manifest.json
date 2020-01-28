@@ -1,23 +1,28 @@
 {
   "files": {
-    "main.css": "/Project-Earth/static/css/main.94a85e70.chunk.css",
-    "main.js": "/Project-Earth/static/js/main.6d523873.chunk.js",
-    "main.js.map": "/Project-Earth/static/js/main.6d523873.chunk.js.map",
+    "main.css": "/Project-Earth/static/css/main.0b56524d.chunk.css",
+    "main.js": "/Project-Earth/static/js/main.54c47f7b.chunk.js",
+    "main.js.map": "/Project-Earth/static/js/main.54c47f7b.chunk.js.map",
     "runtime-main.js": "/Project-Earth/static/js/runtime-main.44a2b263.js",
     "runtime-main.js.map": "/Project-Earth/static/js/runtime-main.44a2b263.js.map",
-    "static/js/2.6a06c936.chunk.js": "/Project-Earth/static/js/2.6a06c936.chunk.js",
-    "static/js/2.6a06c936.chunk.js.map": "/Project-Earth/static/js/2.6a06c936.chunk.js.map",
+    "static/js/2.78f12420.chunk.js": "/Project-Earth/static/js/2.78f12420.chunk.js",
+    "static/js/2.78f12420.chunk.js.map": "/Project-Earth/static/js/2.78f12420.chunk.js.map",
     "index.html": "/Project-Earth/index.html",
-    "precache-manifest.cb6c80b284ff47cadfba772ca5d4b622.js": "/Project-Earth/precache-manifest.cb6c80b284ff47cadfba772ca5d4b622.js",
+    "precache-manifest.0cd3c558020eddb99033f065e74506db.js": "/Project-Earth/precache-manifest.0cd3c558020eddb99033f065e74506db.js",
     "service-worker.js": "/Project-Earth/service-worker.js",
-    "static/css/main.94a85e70.chunk.css.map": "/Project-Earth/static/css/main.94a85e70.chunk.css.map",
-    "static/js/2.6a06c936.chunk.js.LICENSE": "/Project-Earth/static/js/2.6a06c936.chunk.js.LICENSE",
-    "static/media/bg1.png": "/Project-Earth/static/media/bg1.c945766e.png"
+    "static/css/main.0b56524d.chunk.css.map": "/Project-Earth/static/css/main.0b56524d.chunk.css.map",
+    "static/js/2.78f12420.chunk.js.LICENSE": "/Project-Earth/static/js/2.78f12420.chunk.js.LICENSE",
+    "static/media/bg1.png": "/Project-Earth/static/media/bg1.c945766e.png",
+    "static/media/redo.8f8ab8f2.svg": "/Project-Earth/static/media/redo.8f8ab8f2.svg",
+    "static/media/reflect.982b09a3.svg": "/Project-Earth/static/media/reflect.982b09a3.svg",
+    "static/media/sparkles.svg": "/Project-Earth/static/media/sparkles.70d4327a.svg",
+    "static/media/triangle.ec2f1794.svg": "/Project-Earth/static/media/triangle.ec2f1794.svg",
+    "static/media/undo.7d68f9a3.svg": "/Project-Earth/static/media/undo.7d68f9a3.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.44a2b263.js",
-    "static/js/2.6a06c936.chunk.js",
-    "static/css/main.94a85e70.chunk.css",
-    "static/js/main.6d523873.chunk.js"
+    "static/js/2.78f12420.chunk.js",
+    "static/css/main.0b56524d.chunk.css",
+    "static/js/main.54c47f7b.chunk.js"
   ]
 }
