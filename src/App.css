@@ -98,7 +98,7 @@ canvas {
     cursor: pointer;
 }
 select{
-    font-size: xx-large !important;
+    font-size: x-large !important;
     text-align: center;
 }
 .custom-select{

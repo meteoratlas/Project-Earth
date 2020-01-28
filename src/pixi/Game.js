@@ -10,6 +10,8 @@ import Transforms from "../logic/Transforms";
 import Pickup from "./Pickup";
 import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
+import CreateStars from "./BgAnimation";
+import Conffeti from "./Conffeti";
 
 export default class Game {
     constructor(app, props) {
@@ -21,21 +23,31 @@ export default class Game {
         this.allowMove = true;
         this.transition = new Transition(1024, 576);
         this.currentLevel = 1;
+        this.star1 = undefined;
+        this.star2 = undefined; 
+        this.star3 = undefined;   
     }
     start() {
         const root = new PIXI.Container();
-
         const bg = PIXI.Sprite.from(bg1);
         bg.zIndex = -1;
         bg.scale = new PIXI.Point(1.2, 1.2);
         // bg.width = this.app.width;
         // bg.height = this.app.height;
         root.addChild(bg);
-
+    
+        this.star1=new CreateStars(600, 50, 0.4, 0.5);
+        root.addChild(this.star1);
+        this.star2=new CreateStars(15, 150, 0.2, 0.4);
+        root.addChild(this.star2);
+        this.star3=new CreateStars(970, 170, 0.2, 0);
+        root.addChild(this.star3);
+      
         const container = new PIXI.Container();
         root.addChild(container);
         this.app.stage.addChild(root);
 
+       
         // this.app.stage.addChild(container);
         let totalGridSize = 500;
         let cellSize = totalGridSize / 20;
@@ -76,8 +88,16 @@ export default class Game {
             // container.rotation -= 0.005 * delta;
             if (this.tri) {
                 this.tri.draw();
+            };
+            if (this.star1 && this.star2) {
+                this.star1.animateStars();
+                this.star2.animateStars();
             }
+
         });
+
+       
+
     }
     translate(dx, dy) {
         if (!this.allowMove) return;
@@ -126,12 +146,26 @@ export default class Game {
     };
     levelComplete() {
         this.message.setText("You Win!");
+
+        const container = new PIXI.Container;
+        this.app.stage.addChild(container);
+        const conffeti= new Conffeti()
+        for (let i = 0; i < 200; i++) {
+            container.addChild(conffeti.createConffeti());
+        }
+
+        setTimeout(() => {
+            container.removeChildren(0,200);
+        }, 2000);
+       
+
         this.allowMove = false;
         if (this.currentLevel >= 2) {
             this.currentLevel = 1;
         } else {
             this.currentLevel++;
         }
+
 
         this.loadLevel(this.currentLevel);
     }
