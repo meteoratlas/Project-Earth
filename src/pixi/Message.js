@@ -2,11 +2,13 @@ import * as PIXI from "pixi.js-legacy";
 import gsap from "gsap";
 
 export default class Message extends PIXI.Graphics {
-    constructor(message, x, y, timeout) {
+    constructor(message, x, y, timeout, width, height) {
         super();
         this.x = x;
         this.targetY = y;
         this.y = y + 64;
+        this.w = width;
+        this.height = height;
         this.animateSpeed = 0.3;
         this.timeout = timeout;
         this.style = new PIXI.TextStyle({
@@ -30,6 +32,7 @@ export default class Message extends PIXI.Graphics {
     }
     setText(message) {
         this.text.text = message;
+        this.x = this.w / 2 - this.text.width / 2;
         gsap.to(this, {
             y: 50,
             duration: this.animateSpeed,
