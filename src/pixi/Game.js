@@ -9,6 +9,8 @@ import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
 import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
+import CreateStars from "./BgAnimation";
+import Conffeti from "./Conffeti";
 
 export default class Game {
     constructor(app, props) {
@@ -21,16 +23,25 @@ export default class Game {
         this.allowInput = false; // only reset on level reset
         this.transition = new Transition(1024, 576);
         this.currentLevel = 1;
+        this.star1 = undefined;
+        this.star2 = undefined; 
+        this.star3 = undefined;   
     }
     start() {
         const root = new PIXI.Container();
-
         const bg = PIXI.Sprite.from(bg1);
         bg.zIndex = -1;
         bg.scale = new PIXI.Point(1.2, 1.2);
 
         root.addChild(bg);
-
+    
+        this.star1=new CreateStars(600, 50, 0.4, 0.5);
+        root.addChild(this.star1);
+        this.star2=new CreateStars(15, 150, 0.2, 0.4);
+        root.addChild(this.star2);
+        this.star3=new CreateStars(970, 170, 0.2, 0);
+        root.addChild(this.star3);
+      
         const container = new PIXI.Container();
         root.addChild(container);
         this.app.stage.addChild(root);
@@ -77,9 +88,13 @@ export default class Game {
         this.app.ticker.add(delta => {
             if (this.tri) {
                 this.tri.draw();
+            };
+            if (this.star1 && this.star2) {
+                this.star1.animateStars();
+                this.star2.animateStars();
             }
+
         });
-        this.loadLevel(1);
     }
     translate(dx, dy) {
         if (!this.allowMove || !this.allowInput) return;
@@ -132,6 +147,19 @@ export default class Game {
     };
     levelComplete() {
         this.message.setText("You Win!");
+
+        const container = new PIXI.Container;
+        this.app.stage.addChild(container);
+        const conffeti= new Conffeti()
+        for (let i = 0; i < 200; i++) {
+            container.addChild(conffeti.createConffeti());
+        }
+
+        setTimeout(() => {
+            container.removeChildren(0,200);
+        }, 2000);
+       
+
         this.allowMove = false;
         this.allowInput = false;
         if (this.currentLevel >= 3) {
