@@ -16,7 +16,7 @@ export default class Message extends PIXI.Graphics {
             fontSize: 36,
             fontStyle: "italic",
             fontWeight: "bold",
-            fill: ["#ffffff", "#00ff99"], // gradient
+            fill: ["#ffffff", "#ff9922"], // gradient
             stroke: "#4a1850",
             strokeThickness: 5,
             dropShadow: true,
