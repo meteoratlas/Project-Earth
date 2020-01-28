@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "865ff0805ae65a8b67ab2b88d4087806",
+    "revision": "2d5c5990242bcef0525f65d11d3355a7",
     "url": "/Project-Earth/index.html"
   },
   {
-    "revision": "1c035226ee4e1ac97c55",
-    "url": "/Project-Earth/static/css/main.e14b3b0d.chunk.css"
+    "revision": "19edb11cbab5a6700ba0",
+    "url": "/Project-Earth/static/css/main.11a77bc1.chunk.css"
   },
   {
     "revision": "57a395b057904b9a6d6c",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Project-Earth/static/js/2.78f12420.chunk.js.LICENSE"
   },
   {
-    "revision": "1c035226ee4e1ac97c55",
+    "revision": "19edb11cbab5a6700ba0",
     "url": "/Project-Earth/static/js/main.bb886e76.chunk.js"
   },
   {
