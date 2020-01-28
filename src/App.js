@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as PIXI from "pixi.js-legacy";
 import TestMenu from "./components/ui/TestMenu";
 import Game from "./pixi/Game";
-import Transforms from "./logic/Transforms";
 import "./App.css";
 import "./TransTable.css";
 
@@ -14,14 +13,16 @@ class App extends Component {
         this.canvas = this.canvasRef.current;
         this.app = undefined;
         this.game = undefined;
+        this.width = 1024;
+        this.height = 576;
         this.state = {};
     }
     componentDidMount() {
         setTimeout(() => {
             this.canvas = this.canvasRef.current;
             this.app = new PIXI.Application({
-                width: 1024,
-                height: 576,
+                width: this.width,
+                height: this.height,
                 backgroundColor: 0x1099bb,
                 view: this.canvas,
                 resolution: window.devicePixelRatio || 1

@@ -27,15 +27,13 @@ export default class Game {
         const bg = PIXI.Sprite.from(bg1);
         bg.zIndex = -1;
         bg.scale = new PIXI.Point(1.2, 1.2);
-        // bg.width = this.app.width;
-        // bg.height = this.app.height;
+
         root.addChild(bg);
 
         const container = new PIXI.Container();
         root.addChild(container);
         this.app.stage.addChild(root);
 
-        // this.app.stage.addChild(container);
         let totalGridSize = 500;
         let cellSize = totalGridSize / 20;
         let grid = new Grid(16, 16, totalGridSize, totalGridSize);
@@ -54,8 +52,6 @@ export default class Game {
         container.addChild(this.goal);
         container.addChild(this.tri);
 
-        // container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
-
         this.app.stage.addChild(this.transition);
 
         // Move container to the center
@@ -66,13 +62,16 @@ export default class Game {
         container.pivot.x = container.width / 2;
         container.pivot.y = container.height / 2;
 
-        this.message = new Message("", 300, 400, 2000);
+        this.message = new Message(
+            "",
+            this.app.screen.width / 2 - 80,
+            this.app.screen.height / 2,
+            2000
+        );
         this.app.stage.addChild(this.message);
 
         // Listen for animate update
         this.app.ticker.add(delta => {
-            // use delta to create frame-independent transform
-            // container.rotation -= 0.005 * delta;
             if (this.tri) {
                 this.tri.draw();
             }
@@ -113,6 +112,7 @@ export default class Game {
             this.allowMove = false;
             this.message.setText("Went outside grid!");
             this.loadLevel(this.currentLevel, levels);
+            this.toggleUI();
         }
 
         for (let i in this.entities) {

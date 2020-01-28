@@ -70,7 +70,14 @@ canvas {
 }
 
 .hidden {
-    display: none !important;
+    /* display: none !important; */
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.show {
+    opacity: 1;
+    transition: 0.4s;
 }
 
 .icon-group {
@@ -97,11 +104,11 @@ canvas {
 .icon:hover {
     cursor: pointer;
 }
-select{
+select {
     font-size: xx-large !important;
     text-align: center;
 }
-.custom-select{
+.custom-select {
     width: 80%;
     height: 80%;
     justify-self: center;
