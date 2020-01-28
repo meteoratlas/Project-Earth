@@ -88,9 +88,9 @@ canvas {
 }
 
 .icon {
-    height: 3.5rem;
+    height: 4.5rem;
     align-self: center;
-    margin: 10px;
+    /* margin: 10px; */
     opacity: 1;
     /* fill: blue; */
 }
