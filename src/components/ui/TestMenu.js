@@ -18,7 +18,7 @@ class TestMenu extends Component {
     }
 
     timeout = ms => {
-        console.log("timeout loop");
+        // console.log("timeout loop");
         return new Promise(resolve => setTimeout(resolve, ms));
     };
 
@@ -94,7 +94,6 @@ class TestMenu extends Component {
     };
 
     toggleVisible = () => {
-        console.log("toggle");
         this.setState(prev => ({
             hidden: !prev.hidden
         }));
@@ -114,7 +113,7 @@ class TestMenu extends Component {
     render() {
         return (
             // <div id="sidebar" className={this.props.hidden ? "hidden" : ""}>
-            <div id="sidebar" className={this.state.hidden ? "hidden" : ""}>
+            <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
                     <div className="icon-grid">
