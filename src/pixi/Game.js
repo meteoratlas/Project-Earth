@@ -7,7 +7,6 @@ import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
 import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
-import Pickup from "./Pickup";
 import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
 
@@ -55,7 +54,7 @@ export default class Game {
         container.addChild(this.goal);
         container.addChild(this.tri);
 
-        container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
+        // container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
 
         this.app.stage.addChild(this.transition);
 
@@ -78,6 +77,7 @@ export default class Game {
                 this.tri.draw();
             }
         });
+        this.loadLevel(1);
     }
     translate(dx, dy) {
         if (!this.allowMove) return;
@@ -103,6 +103,7 @@ export default class Game {
             this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
             this.transition.transitionIn(() => {
                 this.allowMove = true;
+                this.toggleUI();
             });
         });
     }
@@ -128,12 +129,13 @@ export default class Game {
     levelComplete() {
         this.message.setText("You Win!");
         this.allowMove = false;
-        if (this.currentLevel >= 2) {
+        if (this.currentLevel >= 3) {
             this.currentLevel = 1;
         } else {
             this.currentLevel++;
         }
-
+        this.resetTable();
+        this.toggleUI();
         this.loadLevel(this.currentLevel);
     }
 }
