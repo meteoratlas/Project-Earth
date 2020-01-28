@@ -7,7 +7,6 @@ import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
 import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
-import Pickup from "./Pickup";
 import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
 import CreateStars from "./BgAnimation";
@@ -67,7 +66,7 @@ export default class Game {
         container.addChild(this.goal);
         container.addChild(this.tri);
 
-        container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
+        // container.addChild(new Pickup([-3, 2], totalGridSize, cellSize));
 
         this.app.stage.addChild(this.transition);
 
@@ -79,7 +78,7 @@ export default class Game {
         container.pivot.x = container.width / 2;
         container.pivot.y = container.height / 2;
 
-        this.message = new Message("", 300, 400, 3000);
+        this.message = new Message("", 300, 400, 2000);
         this.app.stage.addChild(this.message);
 
         // Listen for animate update
@@ -95,9 +94,6 @@ export default class Game {
             }
 
         });
-
-       
-
     }
     translate(dx, dy) {
         if (!this.allowMove) return;
@@ -123,6 +119,7 @@ export default class Game {
             this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
             this.transition.transitionIn(() => {
                 this.allowMove = true;
+                this.toggleUI();
             });
         });
     }
@@ -130,6 +127,7 @@ export default class Game {
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
             this.allowMove = false;
+            this.message.setText("Went outside grid!");
             this.loadLevel(this.currentLevel, levels);
         }
 
@@ -160,13 +158,13 @@ export default class Game {
        
 
         this.allowMove = false;
-        if (this.currentLevel >= 2) {
+        if (this.currentLevel >= 3) {
             this.currentLevel = 1;
         } else {
             this.currentLevel++;
         }
-
-
+        this.resetTable();
+        this.toggleUI();
         this.loadLevel(this.currentLevel);
     }
 }

@@ -27,7 +27,9 @@ export default class Message extends PIXI.Graphics {
         });
         this.text = new PIXI.Text(message, this.style);
         this.addChild(this.text);
-
+    }
+    setText(message) {
+        this.text.text = message;
         gsap.to(this, {
             y: 50,
             duration: this.animateSpeed,
@@ -35,14 +37,9 @@ export default class Message extends PIXI.Graphics {
             ease: "bounce.out",
             onComplete: () => {}
         });
-        // setTimeout(() => {
-        //     this.text.text = "";
-        // }, timeout);
-    }
-    setText(message) {
-        this.text.text = message;
         setTimeout(() => {
             this.text.text = "";
+            this.y += 64;
         }, this.timeout);
     }
 }

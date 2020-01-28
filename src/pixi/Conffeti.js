@@ -5,6 +5,7 @@ import * as PIXI from "pixi.js-legacy";
 export default class Conffeti extends PIXI.Graphics {
     constructor() {
         super();
+        this.delta = 0;
     }
     createConffeti() {
         var bubble = new PIXI.Graphics();
@@ -22,8 +23,8 @@ export default class Conffeti extends PIXI.Graphics {
         return bubble;
     }
 
-    // animateStars() {
-    //     this.delta += 0.05;
-    //     this.alpha = Math.sin(this.delta/2)+1+ this.offset; //OPACITY
-    // }
+    animateConfetti() {
+        this.delta += 0.05;
+        this.alpha = Math.sin(this.delta/2)+1+ this.offset; //OPACITY
+    }
 }

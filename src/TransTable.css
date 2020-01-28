@@ -1,0 +1,57 @@
+/* Transformation Sheet */
+.transTable {
+    height: 60%;
+    background-color: #0671B6;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    color: white;
+    height: 100px;
+}
+
+.header, .eachRow {
+    grid-column: span 5;
+	grid-template-columns: 2fr 1fr 2fr;
+    display: grid;
+}
+
+.eachRow {
+    overflow-y: inherit;
+    /* max-height: 71%; */
+}
+
+.detail {    
+    grid-column: span 2;
+}
+
+.box {
+    grid-column: 2fr;
+    background: #D4F1F7;
+    color: black;
+    padding: 5px;
+    margin: 1px;
+    height: 2rem;
+}
+button {    
+    margin: 0px 2px;
+}
+.button {
+    grid-column: span 5;
+    margin: 5px;
+    justify-self: end;
+}
+.middle {    
+    justify-self: center;
+    align-self: center;
+    text-align: center; 
+    width:100%;  
+}
+
+.iconSize {
+    height: 1.5em;
+    width: 1.5em;
+    display: block;
+    margin: auto;
+}
