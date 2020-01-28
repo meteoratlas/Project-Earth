@@ -89,6 +89,7 @@ canvas {
     align-items: center;
     margin:10px;
     margin-bottom:20px;
+    width: 100%;
 }
 .icon-grid {
     display: grid;
