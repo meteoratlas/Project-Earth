@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "53bfc26d78904c83106d986028451aaf",
+    "revision": "865ff0805ae65a8b67ab2b88d4087806",
     "url": "/Project-Earth/index.html"
   },
   {
-    "revision": "0b2c52d5c0df52775d18",
-    "url": "/Project-Earth/static/css/main.0b56524d.chunk.css"
+    "revision": "1c035226ee4e1ac97c55",
+    "url": "/Project-Earth/static/css/main.e14b3b0d.chunk.css"
   },
   {
     "revision": "57a395b057904b9a6d6c",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Project-Earth/static/js/2.78f12420.chunk.js.LICENSE"
   },
   {
-    "revision": "0b2c52d5c0df52775d18",
-    "url": "/Project-Earth/static/js/main.54c47f7b.chunk.js"
+    "revision": "1c035226ee4e1ac97c55",
+    "url": "/Project-Earth/static/js/main.bb886e76.chunk.js"
   },
   {
     "revision": "96329a9bd87e5422831a",
@@ -28,23 +28,23 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Project-Earth/static/media/bg1.c945766e.png"
   },
   {
-    "revision": "8f8ab8f2731cadaa9da463ac9a951048",
-    "url": "/Project-Earth/static/media/redo.8f8ab8f2.svg"
+    "revision": "0c564e06472330b9a418e049e9e0e55b",
+    "url": "/Project-Earth/static/media/redo.0c564e06.svg"
   },
   {
-    "revision": "982b09a3dfbb9752587362ee5da692ed",
-    "url": "/Project-Earth/static/media/reflect.982b09a3.svg"
+    "revision": "7287ffc203e37114f380661d3b87b76f",
+    "url": "/Project-Earth/static/media/reflect.7287ffc2.svg"
   },
   {
     "revision": "70d4327a1d1298683e56acfcfd064400",
     "url": "/Project-Earth/static/media/sparkles.70d4327a.svg"
   },
   {
-    "revision": "ec2f1794cf3f10990ba3495ac9279b75",
-    "url": "/Project-Earth/static/media/triangle.ec2f1794.svg"
+    "revision": "2d4d4ab256bb88925227137b642a2dbc",
+    "url": "/Project-Earth/static/media/triangle.2d4d4ab2.svg"
   },
   {
-    "revision": "7d68f9a32b9f7eb00c3cfe82edc4e0d3",
-    "url": "/Project-Earth/static/media/undo.7d68f9a3.svg"
+    "revision": "d5d3470cc812047e8c8f09f40284d8b6",
+    "url": "/Project-Earth/static/media/undo.d5d3470c.svg"
   }
 ]);
