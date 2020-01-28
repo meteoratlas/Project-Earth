@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js-legacy";
 import gsap from "gsap";
-import Message from "./Message";
+// import Message from "./Message";
 
 export default class Transition extends PIXI.Graphics {
     constructor(width, height) {

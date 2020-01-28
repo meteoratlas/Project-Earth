@@ -118,19 +118,22 @@ class TestMenu extends Component {
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
                     <div className="icon-grid">
-                        <RotateRight
-                            className="icon"
-                            id="idRotateRight"
-                            alt="Rotate Right"
-                            // onClick={this.sendInput}
-                            onClick={this.addToTable}
-                        />
-                        <Arrow
-                            className="icon"
-                            id="idArrowUp"
-                            alt="Move Up"
-                            onClick={this.addToTable}
-                        />
+                        <div onClick={this.addToTable}>
+                            <RotateRight
+                                className="icon"
+                                id="idRotateRight"
+                                alt="Rotate Right"
+                                // onClick={this.sendInput}
+                            />
+                        </div>
+                        <div onClick={this.addToTable}>
+                            <Arrow
+                                className="icon"
+                                id="idArrowUp"
+                                alt="Move Up"
+                                // onClick={this.addToTable}
+                            />
+                        </div>
                         <RotateLeft
                             className="icon"
                             id="idRotateLeft"

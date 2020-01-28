@@ -37,6 +37,7 @@ body {
 #sidebar {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     position: absolute;
     right: 0;
     top: 0;
@@ -70,28 +71,36 @@ canvas {
 }
 
 .hidden {
-    display: none !important;
+    /* display: none !important; */
+    opacity: 0;
+    transition: 0.4s;
 }
 
+.show {
+    opacity: 1;
+    transition: 0.4s;
+}
 .icon-group {
     display: grid;
-    height: 40%;
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
+    margin:10px;
+    margin-bottom:20px;
 }
 .icon-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
+    margin:0;
 }
 
 .icon {
-    height: 4.5rem;
+    height: 3.5rem;
     align-self: center;
-    /* margin: 10px; */
     opacity: 1;
+    margin: 10px;
     /* fill: blue; */
 }
 .icon:hover {
@@ -101,7 +110,7 @@ select{
     font-size: x-large !important;
     text-align: center;
 }
-.custom-select{
+.custom-select {
     width: 80%;
     height: 80%;
     justify-self: center;
