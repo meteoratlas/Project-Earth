@@ -19,7 +19,8 @@ export default class Game {
         this.tri = undefined;
         this.goal = undefined;
         this.message = undefined;
-        this.allowMove = true;
+        this.allowMove = true; // reset when move turn ends
+        this.allowInput = false; // only reset on level reset
         this.transition = new Transition(1024, 576);
         this.currentLevel = 1;
         this.star1 = undefined;
@@ -77,7 +78,9 @@ export default class Game {
             "",
             this.app.screen.width / 2 - 80,
             this.app.screen.height / 2,
-            2000
+            2000,
+            this.app.screen.width,
+            this.app.screen.height
         );
         this.app.stage.addChild(this.message);
 
@@ -96,19 +99,19 @@ export default class Game {
         });
     }
     translate(dx, dy) {
-        if (!this.allowMove) return;
+        if (!this.allowMove || !this.allowInput) return;
         this.allowMove = false;
         const t = Transforms.translate(this.tri.coords, dx, dy);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     rotate(a, oX, oY) {
-        if (!this.allowMove) return;
+        if (!this.allowMove || !this.allowInput) return;
         this.allowMove = false;
         const t = Transforms.rotate(this.tri.coords, a, oX, oY);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     reflect(a, b, c) {
-        if (!this.allowMove) return;
+        if (!this.allowMove || !this.allowInput) return;
         this.allowMove = false;
         const t = Transforms.reflect(this.tri.coords, a, b, c);
         this.tri.setCoordinates(t, this.onMoveComplete);
@@ -119,6 +122,7 @@ export default class Game {
             this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
             this.transition.transitionIn(() => {
                 this.allowMove = true;
+                this.allowInput = true;
                 this.toggleUI();
             });
         });
@@ -127,6 +131,7 @@ export default class Game {
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
             this.allowMove = false;
+            this.allowInput = false;
             this.message.setText("Went outside grid!");
             this.loadLevel(this.currentLevel, levels);
             this.toggleUI();
@@ -137,7 +142,6 @@ export default class Game {
             }
         }
         if (Util.checkWin(this.tri.coords, this.goal.coords)) {
-            this.allowMove = false;
             this.levelComplete();
         } else {
             this.allowMove = true;
@@ -159,6 +163,7 @@ export default class Game {
        
 
         this.allowMove = false;
+        this.allowInput = false;
         if (this.currentLevel >= 3) {
             this.currentLevel = 1;
         } else {
