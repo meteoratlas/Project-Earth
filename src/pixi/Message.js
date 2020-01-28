@@ -13,10 +13,10 @@ export default class Message extends PIXI.Graphics {
         this.timeout = timeout;
         this.style = new PIXI.TextStyle({
             fontFamily: "Arial",
-            fontSize: 36,
+            fontSize: 64,
             fontStyle: "italic",
             fontWeight: "bold",
-            fill: ["#ffffff", "#00ff99"], // gradient
+            fill: ["#ffffff", "#ff9922"], // gradient
             stroke: "#4a1850",
             strokeThickness: 5,
             dropShadow: true,
@@ -24,7 +24,7 @@ export default class Message extends PIXI.Graphics {
             dropShadowBlur: 4,
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 6,
-            wordWrap: true,
+            wordWrap: false,
             wordWrapWidth: 440
         });
         this.text = new PIXI.Text(message, this.style);

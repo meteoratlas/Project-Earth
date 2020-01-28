@@ -23,9 +23,10 @@ export default class Game {
         this.allowInput = false; // only reset on level reset
         this.transition = new Transition(1024, 576);
         this.currentLevel = 1;
+        this.conffeti = undefined;
         this.star1 = undefined;
-        this.star2 = undefined; 
-        this.star3 = undefined;   
+        this.star2 = undefined;
+        this.star3 = undefined;
     }
     start() {
         const root = new PIXI.Container();
@@ -34,14 +35,14 @@ export default class Game {
         bg.scale = new PIXI.Point(1.2, 1.2);
 
         root.addChild(bg);
-    
-        this.star1=new CreateStars(600, 50, 0.4, 0.5);
+
+        this.star1 = new CreateStars(600, 50, 0.4, 0.5);
         root.addChild(this.star1);
-        this.star2=new CreateStars(15, 150, 0.2, 0.4);
+        this.star2 = new CreateStars(15, 150, 0.2, 0.4);
         root.addChild(this.star2);
-        this.star3=new CreateStars(970, 170, 0.2, 0);
+        this.star3 = new CreateStars(970, 170, 0.2, 0);
         root.addChild(this.star3);
-      
+
         const container = new PIXI.Container();
         root.addChild(container);
         this.app.stage.addChild(root);
@@ -90,12 +91,14 @@ export default class Game {
         this.app.ticker.add(delta => {
             if (this.tri) {
                 this.tri.draw();
-            };
+            }
             if (this.star1 && this.star2) {
                 this.star1.animateStars();
                 this.star2.animateStars();
             }
-
+            if (this.conffeti) {
+                this.conffeti.animateConfetti();
+            }
         });
     }
     translate(dx, dy) {
@@ -150,17 +153,13 @@ export default class Game {
     levelComplete() {
         this.message.setText("You Win!");
 
-        const container = new PIXI.Container;
-        this.app.stage.addChild(container);
-        const conffeti= new Conffeti()
-        for (let i = 0; i < 200; i++) {
-            container.addChild(conffeti.createConffeti());
-        }
-
-        setTimeout(() => {
-            container.removeChildren(0,200);
-        }, 2000);
-       
+        // const container = new PIXI.Container();
+        // this.app.stage.addChild(container);
+        this.conffeti = new Conffeti();
+        this.app.stage.addChild(this.conffeti);
+        // for (let i = 0; i < 200; i++) {
+        //     container.addChild(conffeti.createConffeti());
+        // }
 
         this.allowMove = false;
         this.allowInput = false;
