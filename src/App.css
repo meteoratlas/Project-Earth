@@ -104,8 +104,8 @@ canvas {
 .icon:hover {
     cursor: pointer;
 }
-select {
-    font-size: xx-large !important;
+select{
+    font-size: x-large !important;
     text-align: center;
 }
 .custom-select {
