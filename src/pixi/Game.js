@@ -137,6 +137,7 @@ export default class Game {
             this.allowInput = false;
             this.message.setText("Went outside grid!");
             this.loadLevel(this.currentLevel, levels);
+            this.resetTable();
             this.toggleUI();
         }
 
@@ -153,13 +154,8 @@ export default class Game {
     levelComplete() {
         this.message.setText("You Win!");
 
-        // const container = new PIXI.Container();
-        // this.app.stage.addChild(container);
         this.conffeti = new Conffeti();
         this.app.stage.addChild(this.conffeti);
-        // for (let i = 0; i < 200; i++) {
-        //     container.addChild(conffeti.createConffeti());
-        // }
 
         this.allowMove = false;
         this.allowInput = false;
