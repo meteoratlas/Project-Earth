@@ -1,7 +1,8 @@
 /* Transformation Sheet */
 .transTable {
     height: 60%;
-    background-color: #0671B6;
+    background-color: #0671b6;
+    overflow: scroll;
 }
 
 .wrapper {
@@ -11,30 +12,32 @@
     height: 100px;
 }
 
-.header, .eachRow {
+.header,
+.eachRow {
     grid-column: span 5;
-	grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 2fr 1fr 2fr;
     display: grid;
 }
 
 .eachRow {
     overflow-y: inherit;
+    font-size: 1rem;
     /* max-height: 71%; */
 }
 
-.detail {    
+.detail {
     grid-column: span 2;
 }
 
 .box {
     grid-column: 2fr;
-    background: #D4F1F7;
+    background: #d4f1f7;
     color: black;
     padding: 5px;
     margin: 1px;
     height: 2rem;
 }
-button {    
+button {
     margin: 0px 2px;
 }
 .button {
@@ -42,11 +45,11 @@ button {
     margin: 5px;
     justify-self: end;
 }
-.middle {    
+.middle {
     justify-self: center;
     align-self: center;
-    text-align: center; 
-    width:100%;  
+    text-align: center;
+    width: 100%;
 }
 
 .iconSize {

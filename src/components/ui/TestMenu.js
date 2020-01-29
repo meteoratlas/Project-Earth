@@ -122,7 +122,8 @@ class TestMenu extends Component {
                             className="icon"
                             id="idRotateRight"
                             alt="Rotate Right"
-                            onClick={this.sendInput}
+                            // onClick={this.sendInput}
+                            onClick={this.addToTable}
                         />
                         <Arrow
                             className="icon"
