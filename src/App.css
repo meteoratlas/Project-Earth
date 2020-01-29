@@ -47,6 +47,7 @@ body {
     background-color: rgb(255, 255, 255, 0.3);
     margin: 0;
     padding: 0;
+    overflow: scroll;
 }
 #sidebar h3 {
     text-align: center;
@@ -64,12 +65,13 @@ body {
 #game-container {
     position: relative;
     display: inline-block;
+    width: 100%;
     /* height: 100%; */
 }
 
 canvas {
-    /* width: 100%; */
-    height: 100vh;
+    width: 100%;
+    /* height: 100vh; */
 }
 
 .hidden {
@@ -87,20 +89,22 @@ canvas {
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
-    margin:10px;
-    margin-bottom:20px;
-    width: 100%;
+    margin: 10px;
+    margin-bottom: 20px;
+    /* width: 100%; */
+    height: 40%;
 }
 .icon-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
-    margin:0;
+    margin: 0;
 }
 
 .icon {
-    height: 3.5rem;
+    /* height: 3.5rem; */
+    width: 50%;
     align-self: center;
     opacity: 1;
     margin: 10px;
@@ -109,7 +113,7 @@ canvas {
 .icon:hover {
     cursor: pointer;
 }
-select{
+select {
     font-size: x-large !important;
     text-align: center;
 }

@@ -46,7 +46,7 @@ class TestMenu extends Component {
 
         // if table is full
         if (this.nextAvailIndex === this.limitMove)
-            return alert("The table hits maximum move");
+            return alert("Cannot add more moves to the table.");
 
         // if table still have row available
         if (this.nextAvailIndex < this.limitMove) {
@@ -68,7 +68,7 @@ class TestMenu extends Component {
             }
 
             if (e.target.id === "idRotateLeft") {
-                command = "RotateLeft";
+                command = "Rotate Left";
                 detail = "90 degrees";
             }
 
@@ -114,7 +114,7 @@ class TestMenu extends Component {
     render() {
         return (
             // <div id="sidebar" className={this.props.hidden ? "hidden" : ""}>
-            <div id="sidebar" className={this.state.hidden ? "hidden" : ""}>
+            <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
                     <div className="icon-grid">
