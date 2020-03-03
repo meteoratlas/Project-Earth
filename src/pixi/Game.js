@@ -11,14 +11,18 @@ import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
 import CreateStars from "./BgAnimation";
 import Conffeti from "./Conffeti";
+import DamageArea from "./DamageArea";
+import Pickup from "./Pickup";
 
 export default class Game {
     constructor(app, props) {
         this.app = app;
-        this.entities = [];
+        this.pickups = [];
         this.tri = undefined;
         this.goal = undefined;
         this.message = undefined;
+        this.container = new PIXI.Container();
+        this.obstacles = [];
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
         this.transition = new Transition(1024, 576);
@@ -43,15 +47,15 @@ export default class Game {
         this.star3 = new CreateStars(970, 170, 0.2, 0);
         root.addChild(this.star3);
 
-        const container = new PIXI.Container();
-        root.addChild(container);
+        // const container = new PIXI.Container();
+        root.addChild(this.container);
         this.app.stage.addChild(root);
 
         let totalGridSize = 500;
         let cellSize = totalGridSize / 20;
         let grid = new Grid(16, 16, totalGridSize, totalGridSize);
 
-        container.addChild(grid);
+        this.container.addChild(grid);
         let gridNums = new GridNumbers(
             totalGridSize / 2,
             totalGridSize / 2,
@@ -59,21 +63,34 @@ export default class Game {
         );
 
         this.tri = new Triangle(16, 16, totalGridSize, cellSize);
-        container.addChild(gridNums);
+        this.container.addChild(gridNums);
 
         this.goal = new Goal([3, 5, 3, 3, 5, 3], cellSize);
-        container.addChild(this.goal);
-        container.addChild(this.tri);
+        this.container.addChild(this.goal);
+
+        this.container.addChild(this.tri);
+
+        const test1 = new DamageArea(
+            [-10, 10, -5, 10, -5, 5, -10, 5],
+            totalGridSize,
+            cellSize
+        );
+        this.container.addChild(test1);
+        this.obstacles.push(test1);
+
+        const pickup = new Pickup([5, 5], totalGridSize, cellSize);
+        this.pickups.push(pickup);
+        this.container.addChild(pickup);
 
         this.app.stage.addChild(this.transition);
 
-        // Move container to the center
-        container.x = this.app.screen.width / 3;
-        container.y = this.app.screen.height / 2;
+        // Move this.container to the center
+        this.container.x = this.app.screen.width / 3;
+        this.container.y = this.app.screen.height / 2;
 
         // Center sprite in local container coordinates
-        container.pivot.x = container.width / 2;
-        container.pivot.y = container.height / 2;
+        this.container.pivot.x = this.container.width / 2;
+        this.container.pivot.y = this.container.height / 2;
 
         this.message = new Message(
             "",
@@ -141,8 +158,25 @@ export default class Game {
             this.toggleUI();
         }
 
-        for (let i in this.entities) {
-            if (Util.pointInTri(this.tri.coords, i.x, i.y)) {
+        // check collision with pickups
+        for (let i of this.pickups) {
+            if (Util.pointInTri(this.tri.coords, i.coords[0], i.coords[1])) {
+                this.container.removeChild(i);
+                this.pickups.splice(this.pickups.indexOf(i), 1);
+            }
+        }
+
+        for (let i of this.obstacles) {
+            for (let j = 0; j < i.coords.length; j += 2) {
+                if (
+                    Util.pointInTri(
+                        this.tri.coords,
+                        i.coords[j],
+                        i.coords[j + 1]
+                    )
+                ) {
+                    console.log("collide");
+                }
             }
         }
         if (Util.checkWin(this.tri.coords, this.goal.coords)) {
