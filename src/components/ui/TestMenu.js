@@ -5,6 +5,7 @@ import { ReactComponent as RotateRight } from "./redo.svg";
 import { ReactComponent as RotateLeft } from "./undo.svg";
 import { ReactComponent as Reflect } from "./reflect.svg";
 import TransTable from "./TransTable";
+import ReactTooltip from "react-tooltip";
 
 class TestMenu extends Component {
     constructor(props) {
@@ -118,10 +119,12 @@ class TestMenu extends Component {
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
                     <div className="icon-grid">
+                        <ReactTooltip />
                         <RotateRight
                             className="icon"
                             id="idRotateRight"
                             alt="Rotate Right"
+                            data-tip="Rotate 90 degrees right"
                             // onClick={this.sendInput}
                             onClick={this.addToTable}
                         />
@@ -129,12 +132,14 @@ class TestMenu extends Component {
                             className="icon"
                             id="idArrowUp"
                             alt="Move Up"
+                            data-tip="Translate X units up"
                             onClick={this.addToTable}
                         />
                         <RotateLeft
                             className="icon"
                             id="idRotateLeft"
                             alt="Rotate Left"
+                            data-tip="Rotate 90 degrees left"
                             onClick={this.addToTable}
                         />
                     </div>
@@ -143,6 +148,7 @@ class TestMenu extends Component {
                             className="icon"
                             id="idArrowLeft"
                             alt="Move Left"
+                            data-tip="Translate X units left"
                             onClick={this.addToTable}
                         />
                         <select
@@ -150,6 +156,7 @@ class TestMenu extends Component {
                             ref={input => {
                                 this.unitsMove = input;
                             }}
+                            data-tip="Select units to translate by"
                         >
                             <OptionComp />
                         </select>
@@ -157,6 +164,7 @@ class TestMenu extends Component {
                             className="icon"
                             id="idArrowRight"
                             alt="Move Right"
+                            data-tip="Translate X units right"
                             onClick={this.addToTable}
                         />
                     </div>
@@ -165,18 +173,21 @@ class TestMenu extends Component {
                             className="icon"
                             id="idReflectY"
                             alt="Reflect Y"
+                            data-tip="Reflect across Y axis"
                             onClick={this.addToTable}
                         />
                         <Arrow
                             className="icon"
                             id="idArrowDown"
                             alt="Move Down"
+                            data-tip="Translate X units down"
                             onClick={this.addToTable}
                         />
                         <Reflect
                             className="icon"
                             id="idReflectX"
                             alt="Reflect X"
+                            data-tip="Reflect across X axis"
                             onClick={this.addToTable}
                         />
                     </div>
