@@ -31,6 +31,7 @@ export default class Game {
         this.star1 = undefined;
         this.star2 = undefined;
         this.star3 = undefined;
+        this.endText = undefined;
     }
     start() {
         const root = new PIXI.Container();
