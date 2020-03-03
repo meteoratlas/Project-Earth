@@ -13,6 +13,8 @@ class TestMenu extends Component {
         this.limitMove = 5;
         this.nextAvailIndex = 0; //Next available index of transTable
         this.commands = [];
+        this.timestamp = '';
+        this.currentLevel = 1;
         this.state = {
             hidden: true
         };
@@ -24,6 +26,10 @@ class TestMenu extends Component {
     };
 
     sendInput = async e => {
+        console.log(this.commands);
+        this.timestamp = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(Date.now());
+        console.log(this.timestamp);
+
         for (const each of this.commands) {
             if (each.command === "idArrowUp") this.props.moves(0, each.amount);
             if (each.command === "idArrowDown")
