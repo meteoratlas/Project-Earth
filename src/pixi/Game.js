@@ -27,6 +27,7 @@ export default class Game {
         this.star1 = undefined;
         this.star2 = undefined;
         this.star3 = undefined;
+        this.endText = undefined;
     }
     start() {
         const root = new PIXI.Container();
@@ -57,13 +58,12 @@ export default class Game {
             totalGridSize / 2,
             cellSize
         );
-
-        this.tri = new Triangle(16, 16, totalGridSize, cellSize);
         container.addChild(gridNums);
+        this.tri = new Triangle(16, 16, totalGridSize, cellSize);
+        container.addChild(this.tri);
 
         this.goal = new Goal([3, 5, 3, 3, 5, 3], cellSize);
         container.addChild(this.goal);
-        container.addChild(this.tri);
 
         this.app.stage.addChild(this.transition);
 

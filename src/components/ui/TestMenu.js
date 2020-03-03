@@ -114,7 +114,6 @@ class TestMenu extends Component {
 
     render() {
         return (
-            // <div id="sidebar" className={this.props.hidden ? "hidden" : ""}>
             <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">
@@ -125,7 +124,6 @@ class TestMenu extends Component {
                             id="idRotateRight"
                             alt="Rotate Right"
                             data-tip="Rotate 90 degrees right"
-                            // onClick={this.sendInput}
                             onClick={this.addToTable}
                         />
                         <Arrow
@@ -197,7 +195,7 @@ class TestMenu extends Component {
                 <div className="transTable">
                     <div className="wrapper">
                         <div className="button">
-                            <button onClick={this.clearTable}>Clear</button>
+                            <button onClick={this.clearTable}>Reset</button>
                             <button onClick={this.sendInput}>Play All</button>
                         </div>
                         <div className="header">
