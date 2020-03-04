@@ -103,12 +103,11 @@ canvas {
 }
 
 .icon {
-    /* height: 3.5rem; */
+    height: 3.5rem;
     width: 50%;
     align-self: center;
     opacity: 1;
     margin: 10px;
-    /* fill: blue; */
 }
 .icon:hover {
     cursor: pointer;
