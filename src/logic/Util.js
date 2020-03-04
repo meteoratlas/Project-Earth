@@ -56,6 +56,25 @@ export default class Util {
         }
         return { rXMin, rXMax, rYMin, rYMax };
     }
+    // Check if any points making up the triangle intersect the rect (not interpolated)
+    static triPointsInRect(triCoords, rectCoords) {
+        const { rXMin, rXMax, rYMin, rYMax } = this.getRectBounds(rectCoords);
+        let inWidth, inHeight;
+        for (let t = 0; t < triCoords.length; t += 2) {
+            inHeight = false;
+            inWidth = false;
+            let x = triCoords[t];
+            let y = triCoords[t + 1];
+            if (x >= rXMin && x <= rXMax) {
+                inWidth = true;
+            }
+            if (y >= rYMin && y <= rYMax) {
+                inHeight = true;
+            }
+            if (inWidth && inHeight) return true;
+        }
+        return false;
+    }
 
     static HORIZONTAL = "horizontal";
     static VERTICAL = "vertical";

@@ -91,3 +91,13 @@ test("getRectBounds", () => {
     expect(rYMin).toEqual(-4);
     expect(rYMax).toEqual(5);
 });
+
+test("Testing triPointsInRect", () => {
+    const tri1 = [0, 0, 1, 1, 1, 0];
+    const tri2 = [0, 0, 5, 0, 5, 5];
+    const tri3 = [4, 1, 5, 1, 4, 2];
+    const rect = [3, 0, 6, 0, 6, 4, 3, 4];
+    expect(Util.triPointsInRect(tri1, rect)).toEqual(false);
+    expect(Util.triPointsInRect(tri2, rect)).toEqual(true);
+    expect(Util.triPointsInRect(tri3, rect)).toEqual(true);
+});
