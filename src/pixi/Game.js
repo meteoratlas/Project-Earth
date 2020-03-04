@@ -103,7 +103,7 @@ export default class Game {
         );
         this.app.stage.addChild(this.message);
 
-        this.loadLevel(1);
+        this.loadLevel(this.currentLevel);
 
         // Listen for animate update
         this.app.ticker.add(delta => {
