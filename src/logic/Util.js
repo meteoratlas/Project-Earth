@@ -40,6 +40,23 @@ export default class Util {
         const area3 = Math.abs((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py));
         return area1 + area2 + area3 === origArea;
     }
+    static getRectBounds(rectCoords) {
+        let rXMin = Number.MAX_SAFE_INTEGER;
+        let rXMax = Number.MIN_SAFE_INTEGER;
+        let rYMin = Number.MAX_SAFE_INTEGER;
+        let rYMax = Number.MIN_SAFE_INTEGER;
+        for (let i = 0; i < rectCoords.length; i++) {
+            if (i % 2 !== 0) {
+                if (rectCoords[i] < rYMin) rYMin = rectCoords[i];
+                else if (rectCoords[i] > rYMax) rYMax = rectCoords[i];
+            } else {
+                if (rectCoords[i] < rXMin) rXMin = rectCoords[i];
+                else if (rectCoords[i] > rXMax) rXMax = rectCoords[i];
+            }
+        }
+        return { rXMin, rXMax, rYMin, rYMax };
+    }
+
     static HORIZONTAL = "horizontal";
     static VERTICAL = "vertical";
 }
