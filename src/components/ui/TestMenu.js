@@ -7,6 +7,8 @@ import { ReactComponent as Reflect } from "./reflect.svg";
 import { ReactComponent as Audio } from "./sound.svg";
 import TransTable from "./TransTable";
 import ReactTooltip from "react-tooltip";
+import ReactDOM from "react-dom";
+import Report from "./Report.js";
 
 class TestMenu extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class TestMenu extends Component {
     this.limitMove = 5;
     this.nextAvailIndex = 0; //Next available index of transTable
     this.commands = [];
+    this.modalWindow = null; // for report
     this.state = {
       hidden: true
     };
@@ -104,25 +107,59 @@ class TestMenu extends Component {
       document.getElementsByClassName("move")[i].textContent = "";
       document.getElementsByClassName("detail")[i].textContent = "";
     }
+
     this.props.resetLevel();
     this.toggleVisible();
+
     //reset variable
     this.commands = [];
     this.nextAvailIndex = 0;
   };
 
+  onClickReport = () => {
+    this.openWindow();
+  };
+
+  openWindow = () => {
+
+    if (this.modalWindow && !this.modalWindow.closed) {
+      // if report window already exist
+      this.modalWindow.focus();
+    } else {
+      // Open report window
+      const modalTitle = "PrintingReport";
+      this.modalWindow = window.open("about:blank", modalTitle);
+        let root = this.modalWindow.document.body;
+      ReactDOM.render(<Report closeWindow={this.closeWindow} printReport={this.printReport}
+        />, root);
+    }
+  };
+
+  closeWindow = () => {
+    if (this.modalWindow) {
+      this.modalWindow.close();
+      this.modalWindow = null;
+    }
+  }
+
+  printReport = () => {
+    this.modalWindow.print();
+  }
+
   render() {
     return (
       <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
+        <div style={{ margin: '10px 20px' }}>
+          <button style={{ width: "20%" }} className="middle" onClick={this.onClick}>Log In</button>
+          <button style={{ width: "20%", top: '10px', right: '10px', position: 'absolute' }} className="middle" onClick={this.onClickReport}>Report</button>
+        </div>
         {/* display arrows, changed direction in ccs */}
-
         <Audio
           className="icon"
           id="idSoundOn"
           alt="Sound On"
           onClick={this.props.audio}
         />
-
         <div className="icon-group">
           <div className="icon-grid">
             <ReactTooltip />
