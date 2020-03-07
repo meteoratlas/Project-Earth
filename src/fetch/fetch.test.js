@@ -93,6 +93,8 @@ test('test that the fetch works?', async () => {
 
     // // --- update Authrized email for printing report ---
     data = await fetch_functions.addAuthUser(data[0], 'n.pitsini@gmail.com');
+    console.log(data)
+    expect(data.status).toEqual(200);
 
     // let emailList = ['n.pitsini@gmail.com', 'l.sarah@gmail.com'];
     // emailList.push('e.john@hotmail.com');
@@ -102,6 +104,4 @@ test('test that the fetch works?', async () => {
     // expect(data.status).toEqual(200);
 
     // data = await fetch_functions.getData(0);
-    // console.log(data)
-    // // expect(data.).toEqual(200);
 });
