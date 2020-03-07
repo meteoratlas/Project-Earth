@@ -75,6 +75,10 @@ export default class Util {
         }
         return false;
     }
+    // Transfers a value from one scale to another scale. For example, scale(.5, 0, 1, 10, 20) == 15, and scale(3, 0, 5, 100, 0) == 40.
+    static scale(value, min, max, min2, max2) {
+        return min2 + ((value - min) / (max - min)) * (max2 - min2);
+    }
 
     static HORIZONTAL = "horizontal";
     static VERTICAL = "vertical";

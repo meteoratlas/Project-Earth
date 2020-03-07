@@ -101,3 +101,9 @@ test("Testing triPointsInRect", () => {
     expect(Util.triPointsInRect(tri2, rect)).toEqual(true);
     expect(Util.triPointsInRect(tri3, rect)).toEqual(true);
 });
+
+test("Testing scale", () => {
+    expect(Util.scale(0.5, 0, 1, 10, 20)).toEqual(15);
+    expect(Math.floor(Util.scale(4, 0, 7, 1, 3))).toEqual(2);
+    expect(Util.scale(2, 0, 10, 0, 50)).toEqual(10);
+});
