@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js-legacy";
+import gsap from "gsap";
 import Triangle from "./Triangle";
 import Transition from "./Transition";
 import Message from "./Message";
@@ -13,6 +14,7 @@ import CreateStars from "./BgAnimation";
 import Conffeti from "./Conffeti";
 import DamageArea from "./DamageArea";
 import Pickup from "./Pickup";
+import Intersects from "intersects";
 
 export default class Game {
     constructor(app, props) {
@@ -32,6 +34,7 @@ export default class Game {
         this.star2 = undefined;
         this.star3 = undefined;
         this.endText = undefined;
+        this.tutorialText = new PIXI.Text();
     }
     start() {
         const root = new PIXI.Container();
@@ -62,14 +65,25 @@ export default class Game {
             totalGridSize / 2,
             cellSize
         );
-
-        this.tri = new Triangle(16, 16, totalGridSize, cellSize);
         this.container.addChild(gridNums);
+
+        const updater = () => {
+            // console.log("tri update");
+            if (
+                Intersects.polygonPolygon(
+                    this.tri.coords,
+                    this.obstacles[0].coords
+                )
+            ) {
+                this.resetLevel("Touched an obstacle!");
+            }
+        };
+
+        this.tri = new Triangle(16, 16, totalGridSize, cellSize, updater);
+        this.container.addChild(this.tri);
 
         this.goal = new Goal([3, 5, 3, 3, 5, 3], cellSize);
         this.container.addChild(this.goal);
-
-        this.container.addChild(this.tri);
 
         const test1 = new DamageArea(
             [-10, 10, -5, 10, -5, 5, -10, 5],
@@ -82,6 +96,9 @@ export default class Game {
         const pickup = new Pickup([5, 5], totalGridSize, cellSize);
         this.pickups.push(pickup);
         this.container.addChild(pickup);
+
+        // this.container.addChild(this.tutorialText);
+        // this.setTutorialText("This is a test");
 
         this.app.stage.addChild(this.transition);
 
@@ -119,6 +136,14 @@ export default class Game {
             }
         });
     }
+    resetLevel = resetMsg => {
+        this.allowMove = false;
+        this.allowInput = false;
+        this.message.setText(resetMsg);
+        this.loadLevel(this.currentLevel, levels);
+        this.resetTable();
+        this.toggleUI();
+    };
     translate(dx, dy) {
         if (!this.allowMove || !this.allowInput) return;
         this.allowMove = false;
@@ -149,19 +174,25 @@ export default class Game {
         });
     }
     onMoveComplete = () => {
+        console.log(
+            "intersect ",
+            Intersects.polygonPolygon(this.tri.coords, this.obstacles[0].coords)
+        );
+
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
-            this.allowMove = false;
-            this.allowInput = false;
-            this.message.setText("Went outside grid!");
-            this.loadLevel(this.currentLevel, levels);
-            this.resetTable();
-            this.toggleUI();
+            this.resetLevel("Went outside the grid!");
         }
 
         // check collision with pickups
         for (let i of this.pickups) {
-            if (Util.pointInTri(this.tri.coords, i.coords[0], i.coords[1])) {
+            if (
+                Intersects.polygonPoint(
+                    this.tri.coords,
+                    i.coords[0],
+                    i.coords[1]
+                )
+            ) {
                 this.container.removeChild(i);
                 this.pickups.splice(this.pickups.indexOf(i), 1);
             }
@@ -186,6 +217,25 @@ export default class Game {
             this.allowMove = true;
         }
     };
+    setTutorialText(str) {
+        this.tutorialText.text = str;
+        if (!str) return;
+        const animateSpeed = 0.4;
+
+        this.tutorialText.x =
+            this.app.renderer.width / 3 - this.tutorialText.width / 3;
+        const h = this.app.renderer.height;
+        this.tutorialText.y = h;
+        gsap.to(this.tutorialText, {
+            y: this.app.renderer.height - 50,
+            duration: animateSpeed,
+            delay: 0.3,
+            ease: "bounce.out",
+            onComplete: () => {
+                console.log(this.tutorialText.y);
+            }
+        });
+    }
     levelComplete() {
         this.message.setText("You Win!");
 
