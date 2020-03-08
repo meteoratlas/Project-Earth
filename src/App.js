@@ -44,7 +44,8 @@ class App extends Component {
         this.game.reflect(a, b, c);
     };
     resetLevel = () => {
-        this.game.loadLevel(this.game.currentLevel);
+        //this.game.loadLevel(this.game.currentLevel);
+        this.game.resetLevel();
     };
 
     sendResetTableMsg = () => {

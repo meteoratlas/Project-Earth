@@ -23,7 +23,7 @@ class TestMenu extends Component {
     }
 
     timeout = ms => {
-        console.log("timeout loop");
+        // console.log("timeout loop");
         return new Promise(resolve => setTimeout(resolve, ms));
     };
 
@@ -263,7 +263,9 @@ class TestMenu extends Component {
                 <div className="transTable">
                     <div className="wrapper">
                         <div className="button">
-                            <button onClick={this.clearTable}>Reset</button>
+                            <button onClick={this.props.resetLevel}>
+                                Reset
+                            </button>
                             <button onClick={this.sendInput}>Play All</button>
                         </div>
                         <div className="header">
