@@ -27,7 +27,10 @@ export default class Game {
         this.obstacles = [];
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
-        this.transition = new Transition(1024, 576);
+        this.transition = new Transition(
+            this.app.renderer.width,
+            this.app.renderer.height
+        );
         this.currentLevel = 1;
         this.conffeti = undefined;
         this.star1 = undefined;
@@ -68,7 +71,7 @@ export default class Game {
         this.container.addChild(gridNums);
 
         const updater = () => {
-            // console.log("tri update");
+            // Triangle update during movement
             if (
                 Intersects.polygonPolygon(
                     this.tri.coords,
@@ -137,12 +140,14 @@ export default class Game {
         });
     }
     resetLevel = resetMsg => {
+        console.log("on reset");
+
+        // this.toggleUI();
         this.allowMove = false;
         this.allowInput = false;
         this.message.setText(resetMsg);
-        this.loadLevel(this.currentLevel, levels);
         this.resetTable();
-        this.toggleUI();
+        this.loadLevel(this.currentLevel, levels);
     };
     translate(dx, dy) {
         if (!this.allowMove || !this.allowInput) return;
@@ -250,7 +255,7 @@ export default class Game {
             this.currentLevel++;
         }
         this.resetTable();
-        this.toggleUI();
+        // this.toggleUI();
         this.loadLevel(this.currentLevel);
     }
 }
