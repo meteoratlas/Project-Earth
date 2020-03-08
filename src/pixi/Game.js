@@ -19,26 +19,35 @@ import Intersects from "intersects";
 export default class Game {
     constructor(app, props) {
         this.app = app;
+
+        // Level objects
         this.pickups = [];
+        this.obstacles = [];
         this.tri = undefined;
         this.goal = undefined;
         this.message = undefined;
         this.container = new PIXI.Container();
-        this.obstacles = [];
-        this.allowMove = true; // reset when move turn ends
-        this.allowInput = false; // only reset on level reset
-        this.score = 0;
         this.transition = new Transition(
             this.app.renderer.width,
             this.app.renderer.height
         );
-        this.currentLevel = 1;
         this.conffeti = undefined;
         this.star1 = undefined;
         this.star2 = undefined;
         this.star3 = undefined;
-        this.endText = undefined;
         this.tutorialText = new PIXI.Text();
+
+        // Level vars
+        this.allowMove = true; // reset when move turn ends
+        this.allowInput = false; // only reset on level reset
+        this.score = 0;
+        this.maxMoves = Number.MAX_SAFE_INTEGER;
+        this.currentMoves = 0;
+
+        this.currentLevel = 1;
+
+        this.endText = undefined;
+
         this.totalGridSize = 500;
         this.cellSize = this.totalGridSize / 20;
     }
@@ -76,6 +85,9 @@ export default class Game {
             this.collideWithObstacles();
         };
 
+        this.goal = new Goal([], this.cellSize);
+        this.container.addChild(this.goal);
+
         this.tri = new Triangle(
             16,
             16,
@@ -85,14 +97,7 @@ export default class Game {
         );
         this.container.addChild(this.tri);
 
-        this.goal = new Goal([3, 5, 3, 3, 5, 3], this.cellSize);
-        this.container.addChild(this.goal);
-
-        const pickup = new Pickup([5, 5], this.totalGridSize, this.cellSize);
-        this.pickups.push(pickup);
-        this.container.addChild(pickup);
-
-        // this.container.addChild(this.tutorialText);
+        // this.root.addChild(this.tutorialText);
         // this.setTutorialText("This is a test");
 
         this.app.stage.addChild(this.transition);
@@ -145,6 +150,7 @@ export default class Game {
         this.allowMove = false;
         this.allowInput = false;
         this.score = 0;
+
         this.message.setText(resetMsg);
         this.resetTable();
         this.loadLevel(this.currentLevel, levels);
@@ -169,18 +175,34 @@ export default class Game {
     }
     loadLevel(levelIndex, json) {
         this.transition.transitionOut(() => {
+            this.clearEntities();
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
             this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
-            // this.obstacles = levels[levelIndex]["obstacles"].concat();
-            // this.obstacles.forEach(o => {
-            //     const ob = new DamageArea(
-            //         o.coords,
-            //         this.totalGridSize,
-            //         this.cellSize
-            //     );
-            //     this.container.addChild(ob);
-            //     this.obstacles.push(ob);
-            // });
+
+            const damage = levels[levelIndex]["obstacles"].concat();
+            damage.forEach(o => {
+                const ob = new DamageArea(
+                    [...o],
+                    this.totalGridSize,
+                    this.cellSize
+                );
+                this.container.addChild(ob);
+                this.obstacles.push(ob);
+            });
+
+            const bonus = levels[levelIndex]["bonuses"].concat();
+            bonus.forEach(p => {
+                const pick = new Pickup(
+                    [...p],
+                    this.totalGridSize,
+                    this.cellSize
+                );
+                this.container.addChild(pick);
+                this.pickups.push(pick);
+            });
+            this.maxMoves = levels[levelIndex]["maxMoves"];
+            this.currentMoves = 0;
+
             this.transition.transitionIn(() => {
                 this.allowMove = true;
                 this.allowInput = true;
@@ -219,6 +241,15 @@ export default class Game {
         } else {
             this.allowMove = true;
         }
+    };
+    clearEntities = () => {
+        for (let i of this.pickups) {
+            this.container.removeChild(i);
+        }
+        for (let i of this.obstacles) {
+            this.container.removeChild(i);
+        }
+        this.pickups.length = this.obstacles.length = 0;
     };
     setTutorialText(str) {
         this.tutorialText.text = str;
