@@ -27,6 +27,7 @@ export default class Game {
         this.obstacles = [];
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
+        this.score = 0;
         this.transition = new Transition(
             this.app.renderer.width,
             this.app.renderer.height
@@ -38,6 +39,8 @@ export default class Game {
         this.star3 = undefined;
         this.endText = undefined;
         this.tutorialText = new PIXI.Text();
+        this.totalGridSize = 500;
+        this.cellSize = this.totalGridSize / 20;
     }
     start() {
         const root = new PIXI.Container();
@@ -58,45 +61,34 @@ export default class Game {
         root.addChild(this.container);
         this.app.stage.addChild(root);
 
-        let totalGridSize = 500;
-        let cellSize = totalGridSize / 20;
-        let grid = new Grid(16, 16, totalGridSize, totalGridSize);
+        let grid = new Grid(16, 16, this.totalGridSize, this.totalGridSize);
 
         this.container.addChild(grid);
         let gridNums = new GridNumbers(
-            totalGridSize / 2,
-            totalGridSize / 2,
-            cellSize
+            this.totalGridSize / 2,
+            this.totalGridSize / 2,
+            this.cellSize
         );
         this.container.addChild(gridNums);
 
         const updater = () => {
             // Triangle update during movement
-            if (
-                Intersects.polygonPolygon(
-                    this.tri.coords,
-                    this.obstacles[0].coords
-                )
-            ) {
-                this.resetLevel("Touched an obstacle!");
-            }
+            this.collideWithObstacles();
         };
 
-        this.tri = new Triangle(16, 16, totalGridSize, cellSize, updater);
+        this.tri = new Triangle(
+            16,
+            16,
+            this.totalGridSize,
+            this.cellSize,
+            updater
+        );
         this.container.addChild(this.tri);
 
-        this.goal = new Goal([3, 5, 3, 3, 5, 3], cellSize);
+        this.goal = new Goal([3, 5, 3, 3, 5, 3], this.cellSize);
         this.container.addChild(this.goal);
 
-        const test1 = new DamageArea(
-            [-10, 10, -5, 10, -5, 5, -10, 5],
-            totalGridSize,
-            cellSize
-        );
-        this.container.addChild(test1);
-        this.obstacles.push(test1);
-
-        const pickup = new Pickup([5, 5], totalGridSize, cellSize);
+        const pickup = new Pickup([5, 5], this.totalGridSize, this.cellSize);
         this.pickups.push(pickup);
         this.container.addChild(pickup);
 
@@ -139,12 +131,20 @@ export default class Game {
             }
         });
     }
+    collideWithObstacles = () => {
+        if (this.obstacles.length > 0) {
+            for (let i of this.obstacles) {
+                if (Intersects.polygonPolygon(this.tri.coords, i.coords)) {
+                    // collision
+                }
+            }
+        }
+    };
     resetLevel = resetMsg => {
-        console.log("on reset");
-
         // this.toggleUI();
         this.allowMove = false;
         this.allowInput = false;
+        this.score = 0;
         this.message.setText(resetMsg);
         this.resetTable();
         this.loadLevel(this.currentLevel, levels);
@@ -171,51 +171,49 @@ export default class Game {
         this.transition.transitionOut(() => {
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
             this.goal.setCoords(levels[levelIndex]["goalCoords"].concat());
+            // this.obstacles = levels[levelIndex]["obstacles"].concat();
+            // this.obstacles.forEach(o => {
+            //     const ob = new DamageArea(
+            //         o.coords,
+            //         this.totalGridSize,
+            //         this.cellSize
+            //     );
+            //     this.container.addChild(ob);
+            //     this.obstacles.push(ob);
+            // });
             this.transition.transitionIn(() => {
                 this.allowMove = true;
                 this.allowInput = true;
+                this.score = 0;
                 this.toggleUI();
             });
         });
     }
     onMoveComplete = () => {
-        console.log(
-            "intersect ",
-            Intersects.polygonPolygon(this.tri.coords, this.obstacles[0].coords)
-        );
-
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
             this.resetLevel("Went outside the grid!");
         }
 
         // check collision with pickups
-        for (let i of this.pickups) {
-            if (
-                Intersects.polygonPoint(
-                    this.tri.coords,
-                    i.coords[0],
-                    i.coords[1]
-                )
-            ) {
-                this.container.removeChild(i);
-                this.pickups.splice(this.pickups.indexOf(i), 1);
-            }
-        }
-
-        for (let i of this.obstacles) {
-            for (let j = 0; j < i.coords.length; j += 2) {
+        if (this.pickups.length > 0) {
+            for (let i of this.pickups) {
                 if (
-                    Util.pointInTri(
+                    Intersects.polygonPoint(
                         this.tri.coords,
-                        i.coords[j],
-                        i.coords[j + 1]
+                        i.coords[0],
+                        i.coords[1]
                     )
                 ) {
-                    console.log("collide");
+                    this.container.removeChild(i);
+                    this.pickups.splice(this.pickups.indexOf(i), 1);
+                    this.score++;
                 }
             }
         }
+
+        this.collideWithObstacles();
+
         if (Util.checkWin(this.tri.coords, this.goal.coords)) {
             this.levelComplete();
         } else {
