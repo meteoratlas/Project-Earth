@@ -12,7 +12,7 @@ export default class Transition extends PIXI.Graphics {
         this.tris = 4;
         this.triWidth = 80;
         this.triHeight = height / this.tris;
-        this.time = 1;
+        this.time = 0.7;
         this.delay = 0.4;
 
         this.beginFill(0x000000);

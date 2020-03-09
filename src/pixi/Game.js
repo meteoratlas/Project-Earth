@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js-legacy";
-import gsap from "gsap";
 import Triangle from "./Triangle";
 import Transition from "./Transition";
 import Message from "./Message";
@@ -14,6 +13,7 @@ import CreateStars from "./BgAnimation";
 import Conffeti from "./Conffeti";
 import DamageArea from "./DamageArea";
 import Pickup from "./Pickup";
+import TutorialText from "./TutorialText";
 import Intersects from "intersects";
 
 export default class Game {
@@ -35,7 +35,11 @@ export default class Game {
         this.star1 = undefined;
         this.star2 = undefined;
         this.star3 = undefined;
-        this.tutorialText = new PIXI.Text();
+        this.tutorialText = new TutorialText(
+            "Click the icons in the top right to add movement.",
+            this.app.renderer.width,
+            this.app.renderer.height
+        );
 
         // Level vars
         this.allowMove = true; // reset when move turn ends
@@ -43,10 +47,7 @@ export default class Game {
         this.score = 0;
         this.maxMoves = Number.MAX_SAFE_INTEGER;
         this.currentMoves = 0;
-
         this.currentLevel = 1;
-
-        this.endText = undefined;
 
         this.totalGridSize = 500;
         this.cellSize = this.totalGridSize / 20;
@@ -66,7 +67,6 @@ export default class Game {
         this.star3 = new CreateStars(970, 170, 0.2, 0);
         root.addChild(this.star3);
 
-        // const container = new PIXI.Container();
         root.addChild(this.container);
         this.app.stage.addChild(root);
 
@@ -97,8 +97,7 @@ export default class Game {
         );
         this.container.addChild(this.tri);
 
-        // this.root.addChild(this.tutorialText);
-        // this.setTutorialText("This is a test");
+        root.addChild(this.tutorialText);
 
         this.app.stage.addChild(this.transition);
 
@@ -251,27 +250,8 @@ export default class Game {
         }
         this.pickups.length = this.obstacles.length = 0;
     };
-    setTutorialText(str) {
-        this.tutorialText.text = str;
-        if (!str) return;
-        const animateSpeed = 0.4;
-
-        this.tutorialText.x =
-            this.app.renderer.width / 3 - this.tutorialText.width / 3;
-        const h = this.app.renderer.height;
-        this.tutorialText.y = h;
-        gsap.to(this.tutorialText, {
-            y: this.app.renderer.height - 50,
-            duration: animateSpeed,
-            delay: 0.3,
-            ease: "bounce.out",
-            onComplete: () => {
-                console.log(this.tutorialText.y);
-            }
-        });
-    }
     levelComplete() {
-        this.message.setText("You Win!");
+        this.message.setText("Level Complete!");
 
         this.conffeti = new Conffeti();
         this.app.stage.addChild(this.conffeti);
