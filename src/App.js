@@ -5,6 +5,7 @@ import Game from "./pixi/Game";
 import "./App.css";
 import "./TransTable.css";
 import Sound from "react-sound";
+import AudioIcon from "./components/ui/AudioIcon";
 
 class App extends Component {
     constructor(props) {
@@ -83,7 +84,12 @@ class App extends Component {
                         rotates={this.rotate}
                         reflects={this.reflect}
                         resetLevel={this.resetLevel}
-                        audio={this.audioStatus}
+                    />
+                    <AudioIcon
+                        className="audio icon"
+                        id="idSoundOn"
+                        alt="Sound On"
+                        toggle={this.audioStatus}
                     />
                 </div>
             </div>

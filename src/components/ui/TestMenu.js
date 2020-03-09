@@ -4,7 +4,6 @@ import OptionComp from "./selectOpt.js";
 import { ReactComponent as RotateRight } from "./redo.svg";
 import { ReactComponent as RotateLeft } from "./undo.svg";
 import { ReactComponent as Reflect } from "./reflect.svg";
-import { ReactComponent as Audio } from "./sound.svg";
 import TransTable from "./TransTable";
 import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
@@ -178,12 +177,6 @@ class TestMenu extends Component {
                     </button>
                 </div>
                 {/* display arrows, changed direction in ccs */}
-                <Audio
-                    className="icon"
-                    id="idSoundOn"
-                    alt="Sound On"
-                    onClick={this.props.audio}
-                />
                 <div className="icon-group">
                     <div className="icon-grid">
                         <ReactTooltip />

@@ -118,3 +118,10 @@ select {
 #idArrowDown {
     transform: rotateZ(90deg);
 }
+
+.audio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+}
