@@ -8,6 +8,7 @@ import TransTable from "./TransTable";
 import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
 import Report from "./Report.js";
+import Facebook from "./Facebook.js";
 
 class TestMenu extends Component {
     constructor(props) {
@@ -156,13 +157,7 @@ class TestMenu extends Component {
         return (
             <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
                 <div style={{ margin: "10px 20px" }}>
-                    <button
-                        style={{ width: "20%" }}
-                        className="middle"
-                        onClick={this.onClick}
-                    >
-                        Log In
-                    </button>
+                    <Facebook />
                     <button
                         style={{
                             width: "20%",
