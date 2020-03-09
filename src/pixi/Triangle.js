@@ -3,7 +3,7 @@ import gsap from "gsap";
 import Util from "../logic/Util";
 
 export default class Triangle extends PIXI.Graphics {
-    constructor(x, y, boardSize, cellSize) {
+    constructor(x, y, boardSize, cellSize, updateCallback) {
         super();
         this.x = x;
         this.y = y;
@@ -11,6 +11,7 @@ export default class Triangle extends PIXI.Graphics {
         this.cellSize = cellSize;
         this.allowMove = true;
         this.animateSpeed = 0.4;
+        this.updateCallback = updateCallback;
 
         // x1,y1,x2,y2,x3,y3
         // change triangle size in this array
@@ -28,6 +29,9 @@ export default class Triangle extends PIXI.Graphics {
             5: newCoords[5],
             duration: this.animateSpeed,
             ease: "bounce.out",
+            onUpdate: () => {
+                this.updateCallback();
+            },
             onComplete: () => {
                 this.allowMove = true;
                 onComplete();

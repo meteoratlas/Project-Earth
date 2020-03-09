@@ -85,7 +85,7 @@ export default class Game {
             this.collideWithObstacles();
         };
 
-        this.goal = new Goal([], this.cellSize);
+        this.goal = new Goal(this.cellSize);
         this.container.addChild(this.goal);
 
         this.tri = new Triangle(
