@@ -48,6 +48,7 @@ export default class Game {
         this.maxMoves = Number.MAX_SAFE_INTEGER;
         this.currentMoves = 0;
         this.currentLevel = 1;
+        this.allowReset = true;
 
         this.totalGridSize = 500;
         this.cellSize = this.totalGridSize / 20;
@@ -139,12 +140,14 @@ export default class Game {
         if (this.obstacles.length > 0) {
             for (let i of this.obstacles) {
                 if (Intersects.polygonPolygon(this.tri.coords, i.coords)) {
-                    // collision
+                    this.resetLevel("Hit an obstacle!");
                 }
             }
         }
     };
     resetLevel = resetMsg => {
+        if (!this.allowReset) return;
+        this.allowReset = false;
         // this.toggleUI();
         this.allowMove = false;
         this.allowInput = false;
@@ -201,6 +204,7 @@ export default class Game {
             });
             this.maxMoves = levels[levelIndex]["maxMoves"];
             this.currentMoves = 0;
+            this.allowReset = true;
 
             this.transition.transitionIn(() => {
                 this.allowMove = true;

@@ -17,7 +17,7 @@ export default class DamageArea extends PIXI.Graphics {
         let c = Util.localToWorld(this.coords);
         const size = this.cellSize;
         this.clear();
-        this.beginFill(0xeeee44);
+        this.beginFill(0xff0000);
         this.lineStyle(2);
 
         this.moveTo(c[0] * size, c[1] * size);
