@@ -15,6 +15,7 @@ import DamageArea from "./DamageArea";
 import Pickup from "./Pickup";
 import TutorialText from "./TutorialText";
 import Intersects from "intersects";
+import LevelComplete from "./LevelComplete";
 
 export default class Game {
     constructor(app, props) {
@@ -45,9 +46,11 @@ export default class Game {
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
         this.score = 0;
+        this.maxScore = 0;
         this.maxMoves = Number.MAX_SAFE_INTEGER;
         this.currentMoves = 0;
         this.currentLevel = 1;
+        this.maxLevels = 5;
         this.allowReset = true;
         this.attempts = 0;
 
@@ -100,6 +103,18 @@ export default class Game {
         this.container.addChild(this.tri);
 
         root.addChild(this.tutorialText);
+
+        const lc = new LevelComplete(
+            this.app.screen.width / 3,
+            this.app.screen.height / 2,
+            () => {
+                console.log("reset");
+            },
+            () => {
+                console.log("next");
+            }
+        );
+        root.addChild(lc);
 
         this.app.stage.addChild(this.transition);
 
@@ -194,6 +209,7 @@ export default class Game {
             });
 
             const bonus = levels[levelIndex]["bonuses"].concat();
+            const bonusScoreValue = 100;
             bonus.forEach(p => {
                 const pick = new Pickup(
                     [...p],
@@ -202,8 +218,12 @@ export default class Game {
                 );
                 this.container.addChild(pick);
                 this.pickups.push(pick);
+                this.maxScore += bonusScoreValue;
             });
-            this.maxMoves = levels[levelIndex]["maxMoves"];
+            this.maxMoves = Object.keys(levels).length;
+            if (levels[levelIndex]["message"]) {
+                this.tutorialText.text = levels[levelIndex]["message"];
+            }
             this.currentMoves = 0;
             this.allowReset = true;
             this.attempts = 0;
@@ -214,6 +234,8 @@ export default class Game {
                 this.score = 0;
                 this.toggleUI();
             });
+            // add points for completing level
+            this.maxMoves += 500;
         });
     }
     onMoveComplete = () => {
@@ -265,7 +287,7 @@ export default class Game {
 
         this.allowMove = false;
         this.allowInput = false;
-        if (this.currentLevel >= 3) {
+        if (this.currentLevel >= this.maxMoves) {
             this.currentLevel = 1;
         } else {
             this.currentLevel++;
