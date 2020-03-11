@@ -49,6 +49,7 @@ export default class Game {
         this.currentMoves = 0;
         this.currentLevel = 1;
         this.allowReset = true;
+        this.attempts = 0;
 
         this.totalGridSize = 500;
         this.cellSize = this.totalGridSize / 20;
@@ -205,6 +206,7 @@ export default class Game {
             this.maxMoves = levels[levelIndex]["maxMoves"];
             this.currentMoves = 0;
             this.allowReset = true;
+            this.attempts = 0;
 
             this.transition.transitionIn(() => {
                 this.allowMove = true;
@@ -215,6 +217,7 @@ export default class Game {
         });
     }
     onMoveComplete = () => {
+        this.attempts++;
         if (!Util.checkIfInGrid(this.tri.coords, 10)) {
             // went outside the grid
             this.resetLevel("Went outside the grid!");
@@ -270,5 +273,17 @@ export default class Game {
         this.resetTable();
         // this.toggleUI();
         this.loadLevel(this.currentLevel);
+    }
+    reportAttempt(user, success) {
+        return {
+            userID: user,
+            level: this.currentLevel,
+            furthestLevel: this.currentLevel, // TODO
+            numberOfAttempts: this.attempts,
+            numberOfMoves: this.currentMoves,
+            success: success,
+            score: this.score
+            // assemble time-based info on server
+        };
     }
 }
