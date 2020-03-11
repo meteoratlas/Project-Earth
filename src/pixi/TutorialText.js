@@ -29,10 +29,5 @@ export default class TutorialText extends PIXI.Graphics {
     setTutorialText(str) {
         this.text.text = str;
         if (!str) return;
-        //const animateSpeed = 0.4;
-
-        // this.x = this.width / 3 - this.text.width / 3;
-        //const h = this.height - 32;
-        // this.y = h;
     }
 }
