@@ -88,6 +88,7 @@ export default class Game {
         const updater = () => {
             // Triangle update during movement
             this.collideWithObstacles();
+            this.collideWithPickups();
         };
 
         this.goal = new Goal(this.cellSize);
@@ -157,6 +158,23 @@ export default class Game {
             }
         }
     };
+    collideWithPickups = () => {
+        if (this.pickups.length > 0) {
+            for (let i of this.pickups) {
+                if (
+                    Intersects.polygonPoint(
+                        this.tri.coords,
+                        i.coords[0],
+                        i.coords[1]
+                    )
+                ) {
+                    this.container.removeChild(i);
+                    this.pickups.splice(this.pickups.indexOf(i), 1);
+                    this.score += 100;
+                }
+            }
+        }
+    };
     resetLevel = resetMsg => {
         if (!this.allowReset) return;
         this.allowReset = false;
@@ -189,6 +207,7 @@ export default class Game {
     }
     loadLevel(levelIndex, json) {
         this.completeModal.y = 2000;
+        this.maxScore = 0;
         this.transition.transitionOut(() => {
             this.clearEntities();
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
@@ -237,7 +256,7 @@ export default class Game {
                 this.toggleUI();
             });
             // add points for completing level
-            this.maxMoves += 500;
+            this.maxScore += 500;
         });
     }
     onMoveComplete = () => {
@@ -248,21 +267,7 @@ export default class Game {
         }
 
         // check collision with pickups
-        if (this.pickups.length > 0) {
-            for (let i of this.pickups) {
-                if (
-                    Intersects.polygonPoint(
-                        this.tri.coords,
-                        i.coords[0],
-                        i.coords[1]
-                    )
-                ) {
-                    this.container.removeChild(i);
-                    this.pickups.splice(this.pickups.indexOf(i), 1);
-                    this.score += 100;
-                }
-            }
-        }
+        this.collideWithPickups();
 
         this.collideWithObstacles();
 
@@ -283,7 +288,8 @@ export default class Game {
         this.pickups.length = this.obstacles.length = 0;
     };
     levelComplete() {
-        this.message.setText("Level Complete!");
+        //this.message.setText("Level Complete!");
+        this.score += 500;
 
         this.conffeti = new Conffeti();
         this.app.stage.addChild(this.conffeti);
