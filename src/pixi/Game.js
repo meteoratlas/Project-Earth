@@ -28,6 +28,7 @@ export default class Game {
         this.goal = undefined;
         this.message = undefined;
         this.container = new PIXI.Container();
+        this.root = null;
         this.transition = new Transition(
             this.app.renderer.width,
             this.app.renderer.height
@@ -57,22 +58,22 @@ export default class Game {
         this.cellSize = this.totalGridSize / 20;
     }
     start() {
-        const root = new PIXI.Container();
+        this.root = new PIXI.Container();
         const bg = PIXI.Sprite.from(bg1);
         bg.zIndex = -1;
         bg.scale = new PIXI.Point(1.2, 1.2);
 
-        root.addChild(bg);
+        this.root.addChild(bg);
 
         this.star1 = new CreateStars(600, 50, 0.4, 0.5);
-        root.addChild(this.star1);
+        this.root.addChild(this.star1);
         this.star2 = new CreateStars(15, 150, 0.2, 0.4);
-        root.addChild(this.star2);
+        this.root.addChild(this.star2);
         this.star3 = new CreateStars(970, 170, 0.2, 0);
-        root.addChild(this.star3);
+        this.root.addChild(this.star3);
 
-        root.addChild(this.container);
-        this.app.stage.addChild(root);
+        this.root.addChild(this.container);
+        this.app.stage.addChild(this.root);
 
         let grid = new Grid(16, 16, this.totalGridSize, this.totalGridSize);
 
@@ -101,7 +102,7 @@ export default class Game {
         );
         this.container.addChild(this.tri);
 
-        root.addChild(this.tutorialText);
+        this.root.addChild(this.tutorialText);
 
         this.completeModal = new LevelComplete(
             this.app.screen.width / 3,
@@ -109,7 +110,7 @@ export default class Game {
             this.userRequestsResetLevel,
             this.userRequestNextLevel
         );
-        root.addChild(this.completeModal);
+        this.root.addChild(this.completeModal);
 
         this.app.stage.addChild(this.transition);
 
@@ -218,7 +219,12 @@ export default class Game {
             });
             this.maxMoves = Object.keys(levels).length;
             if (levels[levelIndex]["message"]) {
-                this.tutorialText.text = levels[levelIndex]["message"];
+                this.tutorialText = new TutorialText(
+                    levels[levelIndex]["message"],
+                    this.app.renderer.width,
+                    this.app.renderer.height
+                );
+                this.root.addChild(this.tutorialText);
             }
             this.currentMoves = 0;
             this.allowReset = true;
@@ -253,7 +259,7 @@ export default class Game {
                 ) {
                     this.container.removeChild(i);
                     this.pickups.splice(this.pickups.indexOf(i), 1);
-                    this.score++;
+                    this.score += 100;
                 }
             }
         }
@@ -267,6 +273,7 @@ export default class Game {
         }
     };
     clearEntities = () => {
+        this.root.removeChild(this.tutorialText);
         for (let i of this.pickups) {
             this.container.removeChild(i);
         }

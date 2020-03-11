@@ -4,7 +4,7 @@ import gsap from "gsap";
 export default class TutorialText extends PIXI.Graphics {
     constructor(message, width, height) {
         super();
-        this.x = width / 6;
+        this.x = 64; //width / 6;
         this.y = height - 32;
 
         this.width = width;

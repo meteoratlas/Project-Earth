@@ -12,7 +12,8 @@
             [-2, 10, 3, 10, 3, 5, -2, 5]
         ],
         "allowedMoves": [],
-        "maxMoves": 6
+        "maxMoves": 6,
+        "message": "The top-right icons add actions to the movement table. Click Play All to go!"
     },
     "2": {
         "playerCoords": [0, 2, 0, 0, 2, 0],
