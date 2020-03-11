@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f228266fc0cf13ed08f2667aee6a3860",
+    "revision": "6a60af959b5675a0872e99c065133dbf",
     "url": "/Project-Earth/index.html"
   },
   {
-    "revision": "23bcf0f96ec62f81c933",
-    "url": "/Project-Earth/static/css/main.181aa11c.chunk.css"
+    "revision": "4f2ba265039a950babbc",
+    "url": "/Project-Earth/static/css/main.e4444769.chunk.css"
   },
   {
-    "revision": "57a395b057904b9a6d6c",
-    "url": "/Project-Earth/static/js/2.78f12420.chunk.js"
+    "revision": "2ec2418b79abceec6487",
+    "url": "/Project-Earth/static/js/2.4da8170e.chunk.js"
   },
   {
-    "revision": "4516c30e280e997927ced617b4e28391",
-    "url": "/Project-Earth/static/js/2.78f12420.chunk.js.LICENSE"
+    "revision": "9d334328f2f08adf351b1d9140087083",
+    "url": "/Project-Earth/static/js/2.4da8170e.chunk.js.LICENSE"
   },
   {
-    "revision": "23bcf0f96ec62f81c933",
-    "url": "/Project-Earth/static/js/main.a1b0b3cd.chunk.js"
+    "revision": "4f2ba265039a950babbc",
+    "url": "/Project-Earth/static/js/main.e29d82f0.chunk.js"
   },
   {
     "revision": "96329a9bd87e5422831a",
@@ -28,12 +28,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Project-Earth/static/media/bg1.c945766e.png"
   },
   {
+    "revision": "6b62e1bc4df9f4de040727f06675e139",
+    "url": "/Project-Earth/static/media/lava-256.6b62e1bc.png"
+  },
+  {
+    "revision": "bdffa7abc17a583418b3609c55b6419c",
+    "url": "/Project-Earth/static/media/no-sound.bdffa7ab.svg"
+  },
+  {
     "revision": "0c564e06472330b9a418e049e9e0e55b",
     "url": "/Project-Earth/static/media/redo.0c564e06.svg"
   },
   {
     "revision": "7287ffc203e37114f380661d3b87b76f",
     "url": "/Project-Earth/static/media/reflect.7287ffc2.svg"
+  },
+  {
+    "revision": "e38de9b53f16fc2befd6484977685d3a",
+    "url": "/Project-Earth/static/media/sound.e38de9b5.svg"
   },
   {
     "revision": "70d4327a1d1298683e56acfcfd064400",
