@@ -41,8 +41,7 @@ export default class Game {
             this.app.renderer.width,
             this.app.renderer.height
         );
-
-        // Level vars
+        this.completeModal = null; // Level vars
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
         this.score = 0;
@@ -104,17 +103,13 @@ export default class Game {
 
         root.addChild(this.tutorialText);
 
-        const lc = new LevelComplete(
+        this.completeModal = new LevelComplete(
             this.app.screen.width / 3,
             this.app.screen.height / 2,
-            () => {
-                console.log("reset");
-            },
-            () => {
-                console.log("next");
-            }
+            this.userRequestsResetLevel,
+            this.userRequestNextLevel
         );
-        root.addChild(lc);
+        root.addChild(this.completeModal);
 
         this.app.stage.addChild(this.transition);
 
@@ -192,6 +187,7 @@ export default class Game {
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
     loadLevel(levelIndex, json) {
+        this.completeModal.y = 2000;
         this.transition.transitionOut(() => {
             this.clearEntities();
             this.tri.coords = levels[levelIndex]["playerCoords"].concat();
@@ -284,9 +280,12 @@ export default class Game {
 
         this.conffeti = new Conffeti();
         this.app.stage.addChild(this.conffeti);
+        this.completeModal.onBegin(this.score, this.maxScore);
 
         this.allowMove = false;
         this.allowInput = false;
+    }
+    userRequestNextLevel = () => {
         if (this.currentLevel >= this.maxMoves) {
             this.currentLevel = 1;
         } else {
@@ -295,7 +294,12 @@ export default class Game {
         this.resetTable();
         // this.toggleUI();
         this.loadLevel(this.currentLevel);
-    }
+    };
+    userRequestsResetLevel = () => {
+        this.resetTable();
+        // this.toggleUI();
+        this.loadLevel(this.currentLevel);
+    };
     reportAttempt(user, success) {
         return {
             userID: user,

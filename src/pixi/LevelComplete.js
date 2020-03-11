@@ -87,9 +87,9 @@ class LevelComplete extends PIXI.Container {
         });
         this.nextButton.x = this.x + this.w - this.nextButton.width / 2 + 20;
         this.nextButton.y = this.y + this.h + this.nextButton.height + 40;
-        this.onBegin(500, 800);
     }
-    onBegin(score, maxScore) {
+    onBegin = (score, maxScore) => {
+        this.y = 2000;
         this.scoreText.text = `Score: ${score} / ${maxScore}`;
         this.scoreText.x = this.x1 - this.scoreText.width / 2 + 50;
         gsap.to(this, {
@@ -107,7 +107,7 @@ class LevelComplete extends PIXI.Container {
                 this.allowInteract = true;
             }
         });
-    }
+    };
     onEnd() {}
     onButtonOver = b => {
         b.target.alpha = 1;
