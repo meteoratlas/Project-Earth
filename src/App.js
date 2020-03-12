@@ -84,6 +84,9 @@ class App extends Component {
                         rotates={this.rotate}
                         reflects={this.reflect}
                         resetLevel={this.resetLevel}
+                        firstName={this.props.firstName}
+                        lastName={this.props.lastName}
+                        email={this.props.email}
                     />
                     <AudioIcon
                         className="audio icon"
