@@ -22,18 +22,24 @@
         "message": "The arrows move the triangle. The drop-down controls how much you move."
     },
     "3": {
+        "playerCoords": [0, 0, 2, 0, 0, 2],
+        "goalCoords": [0, 0, 2, 0, 0, -2],
+        "bonuses": [],
+        "obstacles": [],
+        "allowedMoves": [],
+        "maxMoves": 6,
+        "message": "Use the rotation buttons to rotate around the origin."
+    },
+    "4": {
         "playerCoords": [-2, -2, 2, -2, 2, 2],
         "goalCoords": [-4, 2, 0, 2, -4, -2],
-        "bonuses": [
-            [1, 3],
-            [5, 6],
-            [-6, 4]
-        ],
+        "bonuses": [[5, 6]],
         "obstacles": [
             [-10, 10, -5, 10, -5, 5, -10, 5],
             [-2, 10, 3, 10, 3, 5, -2, 5]
         ],
         "allowedMoves": [],
-        "maxMoves": 6
+        "maxMoves": 6,
+        "message": "Be sure you don't touch the red obstacles!"
     }
 }
