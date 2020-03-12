@@ -32,10 +32,27 @@ const fetch_functions = {
         return await postData(url + 'add', { key: 0, countKey: 0, authEmail: [] });
     },
 
-    async addAuthUser(obj, newEmail) {
-        obj.authEmail.push(newEmail);
+    async resetUsers() {
+        // await postData(url + 'add', { key: 0, countKey: 0, authEmail: [] });
+        return await postData(url + 'add', { key: 1, users: [] });
+    },
+
+    async addAuthUser(obj, emailArr) {
+        obj.authEmail = [];
+        emailArr.forEach(email => obj.authEmail.push(email));
+        // obj.authEmail.push(newEmail);
         return await postData(url + 'update', { key: 0, countKey: obj.countKey, authEmail: obj.authEmail});
-    }
+    },
+
+    async addNewUser(currentobj, obj) {
+        let newUser = { email: obj.email, firstName: obj.firstName, lastName: obj.lastName, password: obj.password }
+        currentobj.users.push(newUser)
+        // console.log(currentobj)
+        return await postData(url + 'update', { key: 1, users: currentobj.users});
+        //obj.email, firstname: obj.firstName, lastname: obj.firstName, password: obj.password 
+    },
+
+
 }
 
 async function postData(url = '', data = {}) {
