@@ -93,7 +93,6 @@ test('test that the fetch works?', async () => {
 
     // // --- update Authrized email for printing report ---
     data = await fetch_functions.addAuthUser(data[0], 'n.pitsini@gmail.com');
-    console.log(data)
     expect(data.status).toEqual(200);
 
     // let emailList = ['n.pitsini@gmail.com', 'l.sarah@gmail.com'];
