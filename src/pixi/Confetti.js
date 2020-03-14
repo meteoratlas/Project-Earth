@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js-legacy";
 
-export default class Conffeti extends PIXI.Container {
+export default class Confetti extends PIXI.Container {
     constructor() {
         super();
         this.delta = 0;

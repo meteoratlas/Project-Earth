@@ -9,8 +9,7 @@ import Util from "../logic/Util";
 import Transforms from "../logic/Transforms";
 import levels from "../logic/levels.json";
 import bg1 from "../resources/bg1.png";
-import CreateStars from "./BgAnimation";
-import Conffeti from "./Conffeti";
+import Confetti from "./Confetti";
 import DamageArea from "./DamageArea";
 import Pickup from "./Pickup";
 import TutorialText from "./TutorialText";
@@ -21,32 +20,13 @@ export default class Game {
     constructor(app, props) {
         this.app = app;
 
-        // Level objects
-        this.pickups = [];
-        this.obstacles = [];
-        this.tri = undefined;
-        this.goal = undefined;
-        this.message = undefined;
-        this.container = new PIXI.Container();
-        this.root = null;
-        this.transition = new Transition(
-            this.app.renderer.width,
-            this.app.renderer.height
-        );
-        this.conffeti = undefined;
-        this.star1 = undefined;
-        this.star2 = undefined;
-        this.star3 = undefined;
-        this.tutorialText = new TutorialText(
-            "Click the icons in the top right to add movement.",
-            this.app.renderer.width,
-            this.app.renderer.height
-        );
-        this.completeModal = null; // Level vars
+        // Level vars
         this.allowMove = true; // reset when move turn ends
         this.allowInput = false; // only reset on level reset
         this.score = 0;
         this.maxScore = 0;
+        this.completeLevelValue = 500;
+        this.collectItemValue = 100;
         this.maxMoves = Number.MAX_SAFE_INTEGER;
         this.currentMoves = 0;
         this.currentLevel = 1;
@@ -56,64 +36,69 @@ export default class Game {
 
         this.totalGridSize = 500;
         this.cellSize = this.totalGridSize / 20;
-    }
-    start() {
-        this.root = new PIXI.Container();
-        const bg = PIXI.Sprite.from(bg1);
-        bg.zIndex = -1;
-        bg.scale = new PIXI.Point(1.2, 1.2);
-
-        this.root.addChild(bg);
-
-        this.star1 = new CreateStars(600, 50, 0.4, 0.5);
-        this.root.addChild(this.star1);
-        this.star2 = new CreateStars(15, 150, 0.2, 0.4);
-        this.root.addChild(this.star2);
-        this.star3 = new CreateStars(970, 170, 0.2, 0);
-        this.root.addChild(this.star3);
-
-        this.root.addChild(this.container);
-        this.app.stage.addChild(this.root);
-
-        let grid = new Grid(16, 16, this.totalGridSize, this.totalGridSize);
-
-        this.container.addChild(grid);
-        let gridNums = new GridNumbers(
-            this.totalGridSize / 2,
-            this.totalGridSize / 2,
-            this.cellSize
-        );
-        this.container.addChild(gridNums);
-
-        const updater = () => {
-            // Triangle update during movement
+        this.updater = () => {
             this.collideWithObstacles();
             this.collideWithPickups();
         };
 
-        this.goal = new Goal(this.cellSize);
-        this.container.addChild(this.goal);
-
+        // Level objects
+        this.pickups = [];
+        this.obstacles = [];
         this.tri = new Triangle(
             16,
             16,
             this.totalGridSize,
             this.cellSize,
-            updater
+            this.containerupdater
         );
-        this.container.addChild(this.tri);
-
-        this.root.addChild(this.tutorialText);
-
+        this.goal = new Goal(this.cellSize);
+        this.container = new PIXI.Container();
+        this.root = new PIXI.Container();
+        this.transition = new Transition(
+            this.app.renderer.width,
+            this.app.renderer.height
+        );
+        this.confetti = null;
+        this.tutorialText = new TutorialText(
+            "Click the icons in the top right to add movement.",
+            this.app.renderer.width,
+            this.app.renderer.height
+        );
         this.completeModal = new LevelComplete(
             this.app.screen.width / 3,
             this.app.screen.height / 2,
             this.userRequestsResetLevel,
             this.userRequestNextLevel
         );
+    }
+    start() {
+        const bg = PIXI.Sprite.from(bg1);
+        bg.zIndex = -1;
+        bg.scale = new PIXI.Point(1.2, 1.2);
+
+        this.root.addChild(bg);
+
+        this.root.addChild(this.container);
+        this.app.stage.addChild(this.root);
+
+        const grid = new Grid(16, 16, this.totalGridSize, this.totalGridSize);
+        this.container.addChild(grid);
+
+        const gridNums = new GridNumbers(
+            this.totalGridSize / 2,
+            this.totalGridSize / 2,
+            this.cellSize
+        );
+        this.container.addChild(gridNums);
+
+        this.container.addChild(this.goal);
+        this.container.addChild(this.tri);
+
+        this.root.addChild(this.tutorialText);
         this.root.addChild(this.completeModal);
 
         this.app.stage.addChild(this.transition);
+        this.app.stage.addChild(this.message);
 
         // Move this.container to the center
         this.container.x = this.app.screen.width / 3;
@@ -123,16 +108,6 @@ export default class Game {
         this.container.pivot.x = this.container.width / 2;
         this.container.pivot.y = this.container.height / 2;
 
-        this.message = new Message(
-            "",
-            this.app.screen.width / 2 - 80,
-            this.app.screen.height / 2,
-            2000,
-            this.app.screen.width,
-            this.app.screen.height
-        );
-        this.app.stage.addChild(this.message);
-
         this.loadLevel(this.currentLevel);
 
         // Listen for animate update
@@ -140,12 +115,8 @@ export default class Game {
             if (this.tri) {
                 this.tri.draw();
             }
-            if (this.star1 && this.star2) {
-                this.star1.animateStars();
-                this.star2.animateStars();
-            }
-            if (this.conffeti) {
-                this.conffeti.animateConfetti();
+            if (this.confetti) {
+                this.confetti.animateConfetti();
             }
         });
     }
@@ -170,7 +141,7 @@ export default class Game {
                 ) {
                     this.container.removeChild(i);
                     this.pickups.splice(this.pickups.indexOf(i), 1);
-                    this.score += 100;
+                    this.score += this.collectItemValue;
                 }
             }
         }
@@ -225,7 +196,6 @@ export default class Game {
             });
 
             const bonus = levels[levelIndex]["bonuses"].concat();
-            const bonusScoreValue = 100;
             bonus.forEach(p => {
                 const pick = new Pickup(
                     [...p],
@@ -234,7 +204,7 @@ export default class Game {
                 );
                 this.container.addChild(pick);
                 this.pickups.push(pick);
-                this.maxScore += bonusScoreValue;
+                this.maxScore += this.collectItemValue;
             });
             this.maxMoves = Object.keys(levels).length;
             if (levels[levelIndex]["message"]) {
@@ -256,7 +226,7 @@ export default class Game {
                 this.toggleUI();
             });
             // add points for completing level
-            this.maxScore += 500;
+            this.maxScore += this.completeLevelValue;
         });
     }
     onMoveComplete = () => {
@@ -265,12 +235,8 @@ export default class Game {
             // went outside the grid
             this.resetLevel("Went outside the grid!");
         }
-
-        // check collision with pickups
         this.collideWithPickups();
-
         this.collideWithObstacles();
-
         if (Util.checkWin(this.tri.coords, this.goal.coords)) {
             this.levelComplete();
         } else {
@@ -288,11 +254,10 @@ export default class Game {
         this.pickups.length = this.obstacles.length = 0;
     };
     levelComplete() {
-        //this.message.setText("Level Complete!");
-        this.score += 500;
+        this.score += this.completeLevelValue;
 
-        this.conffeti = new Conffeti();
-        this.app.stage.addChild(this.conffeti);
+        this.confetti = new Confetti();
+        this.app.stage.addChild(this.confetti);
         this.completeModal.onBegin(this.score, this.maxScore);
 
         this.allowMove = false;
@@ -305,12 +270,10 @@ export default class Game {
             this.currentLevel++;
         }
         this.resetTable();
-        // this.toggleUI();
         this.loadLevel(this.currentLevel);
     };
     userRequestsResetLevel = () => {
         this.resetTable();
-        // this.toggleUI();
         this.loadLevel(this.currentLevel);
     };
     reportAttempt(user, success) {
