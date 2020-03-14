@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js-legacy";
 import Triangle from "./Triangle";
 import Transition from "./Transition";
-import Message from "./Message";
 import Grid from "./Grid";
 import GridNumbers from "./GridNumbers";
 import Goal from "./Goal";
@@ -49,7 +48,7 @@ export default class Game {
             16,
             this.totalGridSize,
             this.cellSize,
-            this.containerupdater
+            this.updater
         );
         this.goal = new Goal(this.cellSize);
         this.container = new PIXI.Container();
@@ -98,7 +97,6 @@ export default class Game {
         this.root.addChild(this.completeModal);
 
         this.app.stage.addChild(this.transition);
-        this.app.stage.addChild(this.message);
 
         // Move this.container to the center
         this.container.x = this.app.screen.width / 3;
@@ -146,15 +144,12 @@ export default class Game {
             }
         }
     };
-    resetLevel = resetMsg => {
+    resetLevel = () => {
         if (!this.allowReset) return;
         this.allowReset = false;
-        // this.toggleUI();
         this.allowMove = false;
         this.allowInput = false;
         this.score = 0;
-
-        this.message.setText(resetMsg);
         this.resetTable();
         this.loadLevel(this.currentLevel, levels);
     };
@@ -176,7 +171,7 @@ export default class Game {
         const t = Transforms.reflect(this.tri.coords, a, b, c);
         this.tri.setCoordinates(t, this.onMoveComplete);
     }
-    loadLevel(levelIndex, json) {
+    loadLevel(levelIndex) {
         this.completeModal.y = 2000;
         this.maxScore = 0;
         this.transition.transitionOut(() => {

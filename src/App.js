@@ -13,8 +13,8 @@ class App extends Component {
         this.canvasRef = React.createRef();
         this.UIRef = React.createRef();
         this.canvas = this.canvasRef.current;
-        this.app = undefined;
-        this.game = undefined;
+        this.app = null;
+        this.game = null;
         this.width = 1024;
         this.height = 576;
         this.state = { audioStatus: Sound.status.PLAYING };
