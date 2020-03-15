@@ -8,9 +8,7 @@ import TransTable from "./TransTable";
 import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
 import Report from "./Report.js";
-// import Facebook from "./Facebook.js";
-import fetch_functions from '../../fetch/fetch_functions'
-import { User, DataServer } from '../../fetch/DataServer'
+import { User, DataServer } from "../../fetch/DataServer";
 
 class TestMenu extends Component {
     constructor(props) {
@@ -21,19 +19,48 @@ class TestMenu extends Component {
         this.modalWindow = null; // for report
         this.state = {
             hidden: true
-      };
+        };
 
-      // this.data = '';  
-      this.fetchData = '';
-      this.dataserver = new DataServer();
-      this.password = "123"
-      this.newCountKey = 0;
+        // this.data = '';
+        this.fetchData = "";
+        this.dataserver = new DataServer();
+        this.password = "123";
+        this.newCountKey = 0;
 
-      this.authEmail = "vanee7@hotmail.com";
-      this.user1 = new User(1, 'New Pitsini', 'vanee7@hotmail.com', 3, [{ command: "idArrowRight", amount: 1 }, { command: "idArrowUp", amount: 1 }], '03/03/2020, 01:01:32 PM');
-      this.user2 = new User(2, 'New Pitsini', 'vanee7@hotmail.com', 3, [{ command: "idArrowRight", amount: 1 }, { command: "idArrowUp", amount: 1 }], '07/01/2020, 01:09:26 AM');
-      this.user3 = new User(3, 'Justin Cook', 'justin.cook@gmail.com', 1, [{ command: "idArrowLeft", amount: 4 }, { command: "idArrowUp", amount: 2 }], '07/01/2020, 01:09:26 AM');
-
+        this.authEmail = "vanee7@hotmail.com";
+        this.user1 = new User(
+            1,
+            "New Pitsini",
+            "vanee7@hotmail.com",
+            3,
+            [
+                { command: "idArrowRight", amount: 1 },
+                { command: "idArrowUp", amount: 1 }
+            ],
+            "03/03/2020, 01:01:32 PM"
+        );
+        this.user2 = new User(
+            2,
+            "New Pitsini",
+            "vanee7@hotmail.com",
+            3,
+            [
+                { command: "idArrowRight", amount: 1 },
+                { command: "idArrowUp", amount: 1 }
+            ],
+            "07/01/2020, 01:09:26 AM"
+        );
+        this.user3 = new User(
+            3,
+            "Justin Cook",
+            "justin.cook@gmail.com",
+            1,
+            [
+                { command: "idArrowLeft", amount: 4 },
+                { command: "idArrowUp", amount: 2 }
+            ],
+            "07/01/2020, 01:09:26 AM"
+        );
     }
 
     timeout = ms => {
@@ -163,12 +190,12 @@ class TestMenu extends Component {
 
     printReport = () => {
         this.modalWindow.print();
-  };
+    };
 
     render() {
         return (
             <div id="sidebar" className={this.state.hidden ? "hidden" : "show"}>
-              {/* <div id="serverMsg">hi</div> */}
+                {/* <div id="serverMsg">hi</div> */}
                 <div style={{ marginTop: "10px", marginLeft: "10px" }}>
                     Welcome, {this.props.firstName} {this.props.lastName}
                     {/* <Facebook /> */}
@@ -182,7 +209,9 @@ class TestMenu extends Component {
                         }}
                         className="middle"
                         onClick={this.onClickReport}
-                    >Log Out</button>
+                    >
+                        Log Out
+                    </button>
                 </div>
                 {/* display arrows, changed direction in ccs */}
                 <div className="icon-group">

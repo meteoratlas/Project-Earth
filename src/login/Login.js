@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./login.css";
-import fetch_functions from '../fetch/fetch_functions'
-import { User, DataServer } from '../fetch/DataServer'
+import fetch_functions from "../fetch/fetch_functions";
+import { DataServer } from "../fetch/DataServer";
 import App from "../App";
 import Facebook from "../components/ui/Facebook";
 
@@ -22,7 +22,7 @@ const formValid = ({ formErrors, ...rest }) => {
         val === null && (valid = false);
     });
 
-    console.log("valid:", valid)
+    console.log("valid:", valid);
     return valid;
 };
 
@@ -30,7 +30,13 @@ const loginFormValid = ({ formErrors, ...rest }) => {
     // let valid = true;
     console.log("formErrors", formErrors);
 
-    let valid = (formErrors.email.length > 0 || formErrors.password.length > 0 || rest.email === null || rest.password === null)? false : true;
+    let valid =
+        formErrors.email.length > 0 ||
+        formErrors.password.length > 0 ||
+        rest.email === null ||
+        rest.password === null
+            ? false
+            : true;
     // // validate form errors being empty
     // Object.values(formErrors).forEach(val => {
     //     console.log("val.length", val.length)
@@ -42,7 +48,7 @@ const loginFormValid = ({ formErrors, ...rest }) => {
     //     val === null && (valid = false);
     // });
 
-    console.log("valid:", valid)
+    console.log("valid:", valid);
     return valid;
 };
 
@@ -50,6 +56,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.content = "";
+        this.debug = true;
         // this.wantToLogin = false;
         this.state = {
             firstName: null,
@@ -64,16 +71,26 @@ class Login extends Component {
             },
             isLoggedIn: false,
             wantToLogin: false,
-            serverMsg: "",
+            serverMsg: ""
         };
 
         //fetch
-        this.fetchData = '';
+        this.fetchData = "";
         this.dataserver = new DataServer();
         this.newCountKey = 2;
         this.authEmail = ["pitsini@gmail.com"];
-        this.user1 = { email: "sarah@gmail.com", firstName: "Sarah", lastName: "Bowman", password: "1111" }
-        this.user2 = { email: "pitsini@gmail.com", firstName: "New", lastName: "Pitsini", password: "1111"}
+        this.user1 = {
+            email: "sarah@gmail.com",
+            firstName: "Sarah",
+            lastName: "Bowman",
+            password: "1111"
+        };
+        this.user2 = {
+            email: "pitsini@gmail.com",
+            firstName: "New",
+            lastName: "Pitsini",
+            password: "1111"
+        };
     }
 
     createAccSubmit = async e => {
@@ -88,19 +105,25 @@ class Login extends Component {
                 Password: ${this.state.password}
             `);
             // email already exists
-            if (await this.checkEmailExist(this.state.email)){
-                console.log("Sorry, It's already exists!")
+            if (await this.checkEmailExist(this.state.email)) {
+                console.log("Sorry, this email already exists!");
                 let formErrors = { ...this.state.formErrors };
                 formErrors.email = "This email already exists";
-                this.setState({ formErrors, [formErrors.email]: "This email already exists"}, () => console.log(this.state));
+                this.setState(
+                    {
+                        formErrors,
+                        [formErrors.email]: "This email already exists"
+                    },
+                    () => console.log(this.state)
+                );
             } else {
                 // add new user in Database
-                console.log("create account: it's a new one!")
+                console.log("create account: it's a new one!");
                 await this.addNewUser(this.state);
                 this.setState({
                     isLoggedIn: true
                 });
-            };
+            }
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
@@ -116,18 +139,28 @@ class Login extends Component {
                 Password: ${this.state.password}
             `);
 
-            if (await this.checkEmailPasswd(this.state.email, this.state.password)) {
+            if (
+                await this.checkEmailPasswd(
+                    this.state.email,
+                    this.state.password
+                )
+            ) {
                 this.setState({
                     isLoggedIn: true
                 });
             } else {
                 // wrong email or password
-                console.log("wrong username/password")
+                console.log("wrong username/password");
                 let formErrors = { ...this.state.formErrors };
                 formErrors.password = "Invalid email or password";
-                this.setState({ formErrors, [formErrors.password]: "Invalid email or password" }, () => console.log(this.state));
-                
-            };
+                this.setState(
+                    {
+                        formErrors,
+                        [formErrors.password]: "Invalid email or password"
+                    },
+                    () => console.log(this.state)
+                );
+            }
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
@@ -141,11 +174,11 @@ class Login extends Component {
         switch (name) {
             case "firstName":
                 formErrors.firstName =
-                    value.length < 3 ? "minimum 3 characaters required" : "";
+                    value.length < 3 ? "minimum 3 characters required" : "";
                 break;
             case "lastName":
                 formErrors.lastName =
-                    value.length < 3 ? "minimum 3 characaters required" : "";
+                    value.length < 3 ? "minimum 3 characters required" : "";
                 break;
             case "email":
                 formErrors.email = emailRegex.test(value)
@@ -154,80 +187,94 @@ class Login extends Component {
                 break;
             case "password":
                 formErrors.password =
-                    value.length < 4 ? "minimum 4 characaters required" : "";
+                    value.length < 4 ? "minimum 4 characters required" : "";
                 break;
             default:
                 break;
         }
 
-        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+        this.setState({ formErrors, [name]: value }, () =>
+            console.log(this.state)
+        );
     };
 
     onClickLogin = () => {
-        this.setState({wantToLogin: true});
-        console.log("set wanttologin = true")
-    }
+        this.setState({ wantToLogin: true });
+        console.log("set wanttologin = true");
+    };
 
     onClickCreateAcc = () => {
         this.setState({ wantToLogin: false });
-        console.log("set wanttologin = false")
-    }
+        console.log("set wanttologin = false");
+    };
 
     //fetch
-    checkEmailExist = async (email) => {
+    checkEmailExist = async email => {
         let duplicate = false;
         this.fetchData = await fetch_functions.getData(1);
         this.fetchData[0].users.forEach(each => {
-            if (email === each.email) {duplicate = true};
-        })
+            if (email === each.email) {
+                duplicate = true;
+            }
+        });
         return duplicate;
-    }
+    };
 
-    checkEmailPasswd = async (email,password) => {
+    checkEmailPasswd = async (email, password) => {
         let correctEmailPasswd = false;
 
         this.fetchData = await fetch_functions.getData(1);
         this.fetchData[0].users.forEach(each => {
             if (email === each.email && password === each.password) {
                 correctEmailPasswd = true;
-                this.setState({ firstName: each.firstName, lastName: each.lastName})
-            };
-        })
+                this.setState({
+                    firstName: each.firstName,
+                    lastName: each.lastName
+                });
+            }
+        });
         return correctEmailPasswd;
-    }
+    };
 
-    addNewUser = async (newUser) => {
+    addNewUser = async newUser => {
         this.fetchData = await fetch_functions.getData(1);
-        console.log("this.fetchData", this.fetchData[0])
+        console.log("this.fetchData", this.fetchData[0]);
         await fetch_functions.addNewUser(this.fetchData[0], newUser);
-    }
+    };
 
     checkServer = async () => {
         this.setState({ serverMsg: "Connecting..." });
         try {
             this.fetchData = await fetch_functions.getAllData();
             switch (true) {
-                case (this.fetchData.status === 200):
-                    this.message =  "Successfully Connect to Server!";
+                case this.fetchData.status === 200:
+                    this.message = "Successfully Connected to Server!";
                     break;
                 default:
                     this.message = "";
             }
         } catch (error) {
             this.message = `Connection Failed!`;
-            console.log('message: ', error);
+            console.log("message: ", error);
         }
-    }
+    };
 
     loadServer = async () => {
         // if it's not the right DB or no data in DB
-        if (this.fetchData.length === 0 || this.fetchData[0].countKey === undefined || this.fetchData[0].authEmail === undefined) {
+        if (
+            this.fetchData.length === 0 ||
+            this.fetchData[0].countKey === undefined ||
+            this.fetchData[0].authEmail === undefined
+        ) {
             console.log("Reset Database");
             this.fetchData = await fetch_functions.clearData();
             this.fetchData = await fetch_functions.resetCountKey();
             this.fetchData = await fetch_functions.getData(0);
-            console.log(this.fetchData[0])
-            this.fetchData = await fetch_functions.addAuthUser(this.fetchData[0], this.authEmail);
+            console.log(this.fetchData[0]);
+            this.fetchData = await fetch_functions.addAuthUser(
+                this.fetchData[0],
+                this.authEmail
+            );
             if (this.fetchData === 200) {
                 this.dataserver.setCountKey(this.newCountKey);
             }
@@ -241,27 +288,26 @@ class Login extends Component {
             // add user2
             this.fetchData = await fetch_functions.getData(1);
             await this.addNewUser(this.user2);
-
-            
         } else if (this.fetchData.length === 1) {
             // has only countKey data
             console.log("has only countKey data");
             console.log(this.fetchData[0]);
 
             this.newCountKey = this.fetchData[0].countKey;
-            await fetch_functions.addAuthUser(this.fetchData[0], this.authEmail);
+            await fetch_functions.addAuthUser(
+                this.fetchData[0],
+                this.authEmail
+            );
             this.dataserver.setCountKey(this.fetchData[0].countKey);
-
-            
         } else {
             // has the right data in DB
             console.log("has the right data in DB");
-            this.dataserver.allData = [];  // clear array
+            this.dataserver.allData = []; // clear array
             this.newCountKey = this.fetchData[0].countKey;
             this.dataserver.setCountKey(this.fetchData[0].countKey);
         }
         this.setState({ serverMsg: this.message });
-    }
+    };
 
     async componentDidMount() {
         await this.checkServer();
@@ -269,7 +315,7 @@ class Login extends Component {
     }
 
     render() {
-        if (this.state.isLoggedIn) {
+        if (this.state.isLoggedIn || this.debug) {
             // show game page
             this.content = (
                 <App
@@ -284,11 +330,15 @@ class Login extends Component {
                 <div className="wrapper">
                     <div className="form-wrapper">
                         <h1>Log In</h1>
-                        <form onSubmit={this.logInSubmit} noValidate>                                
+                        <form onSubmit={this.logInSubmit} noValidate>
                             <div className="email">
                                 <label htmlFor="email">Email</label>
                                 <input
-                                    className={this.state.formErrors.email.length > 0 ? "error" : null}
+                                    className={
+                                        this.state.formErrors.email.length > 0
+                                            ? "error"
+                                            : null
+                                    }
                                     placeholder="Email"
                                     type="email"
                                     name="email"
@@ -296,13 +346,20 @@ class Login extends Component {
                                     onChange={this.handleChange}
                                 />
                                 {this.state.formErrors.email.length > 0 && (
-                                    <span className="errorMessage">{this.state.formErrors.email}</span>
+                                    <span className="errorMessage">
+                                        {this.state.formErrors.email}
+                                    </span>
                                 )}
                             </div>
                             <div className="password">
                                 <label htmlFor="password">Password</label>
                                 <input
-                                    className={this.state.formErrors.password.length > 0 ? "error" : null}
+                                    className={
+                                        this.state.formErrors.password.length >
+                                        0
+                                            ? "error"
+                                            : null
+                                    }
                                     placeholder="Password"
                                     type="password"
                                     name="password"
@@ -310,88 +367,148 @@ class Login extends Component {
                                     onChange={this.handleChange}
                                 />
                                 {this.state.formErrors.password.length > 0 && (
-                                    <span className="errorMessage">{this.state.formErrors.password}</span>
+                                    <span className="errorMessage">
+                                        {this.state.formErrors.password}
+                                    </span>
                                 )}
                             </div>
                             <div className="createAccount">
                                 <button type="submit">Log In</button>
-                                <small className="link" onClick={this.onClickCreateAcc}>Create New Account</small>
+                                <small
+                                    className="link"
+                                    onClick={this.onClickCreateAcc}
+                                >
+                                    Create New Account
+                                </small>
                             </div>
                         </form>
                     </div>
                 </div>
-            )
+            );
         } else {
             console.log("create account page...");
             // show create account page
             this.content = (
                 <div>
-                    <div id="serverMsg" className="server">{this.state.serverMsg}</div>
+                    <div id="serverMsg" className="server">
+                        {this.state.serverMsg}
+                    </div>
                     <div className="wrapper">
                         <div className="form-wrapper">
                             <div>
                                 <h1>Create Account</h1>
-                                <form onSubmit={this.createAccSubmit} noValidate>
+                                <form
+                                    onSubmit={this.createAccSubmit}
+                                    noValidate
+                                >
                                     <div className="firstName">
-                                        <label htmlFor="firstName">First Name</label>
+                                        <label htmlFor="firstName">
+                                            First Name
+                                        </label>
                                         <input
-                                            className={this.state.formErrors.firstName.length > 0 ? "error" : null}
+                                            className={
+                                                this.state.formErrors.firstName
+                                                    .length > 0
+                                                    ? "error"
+                                                    : null
+                                            }
                                             placeholder="First Name"
                                             type="text"
                                             name="firstName"
                                             noValidate
                                             onChange={this.handleChange}
                                         />
-                                        {this.state.formErrors.firstName.length > 0 && (
-                                            <span className="errorMessage">{this.state.formErrors.firstName}</span>
+                                        {this.state.formErrors.firstName
+                                            .length > 0 && (
+                                            <span className="errorMessage">
+                                                {
+                                                    this.state.formErrors
+                                                        .firstName
+                                                }
+                                            </span>
                                         )}
                                     </div>
                                     <div className="lastName">
-                                        <label htmlFor="lastName">Last Name</label>
+                                        <label htmlFor="lastName">
+                                            Last Name
+                                        </label>
                                         <input
-                                            className={this.state.formErrors.lastName.length > 0 ? "error" : null}
+                                            className={
+                                                this.state.formErrors.lastName
+                                                    .length > 0
+                                                    ? "error"
+                                                    : null
+                                            }
                                             placeholder="Last Name"
                                             type="text"
                                             name="lastName"
                                             noValidate
                                             onChange={this.handleChange}
                                         />
-                                        {this.state.formErrors.lastName.length > 0 && (
-                                            <span className="errorMessage">{this.state.formErrors.lastName}</span>
+                                        {this.state.formErrors.lastName.length >
+                                            0 && (
+                                            <span className="errorMessage">
+                                                {this.state.formErrors.lastName}
+                                            </span>
                                         )}
                                     </div>
                                     <div className="email">
                                         <label htmlFor="email">Email</label>
                                         <input
                                             id="email"
-                                            className={this.state.formErrors.email.length > 0 ? "error" : null}
+                                            className={
+                                                this.state.formErrors.email
+                                                    .length > 0
+                                                    ? "error"
+                                                    : null
+                                            }
                                             placeholder="Email"
                                             type="email"
                                             name="email"
                                             noValidate
                                             onChange={this.handleChange}
                                         />
-                                        {this.state.formErrors.email.length > 0 && (
-                                            <span className="errorMessage">{this.state.formErrors.email}</span>
+                                        {this.state.formErrors.email.length >
+                                            0 && (
+                                            <span className="errorMessage">
+                                                {this.state.formErrors.email}
+                                            </span>
                                         )}
                                     </div>
                                     <div className="password">
-                                        <label htmlFor="password">Password</label>
+                                        <label htmlFor="password">
+                                            Password
+                                        </label>
                                         <input
-                                            className={this.state.formErrors.password.length > 0 ? "error" : null}
+                                            className={
+                                                this.state.formErrors.password
+                                                    .length > 0
+                                                    ? "error"
+                                                    : null
+                                            }
                                             placeholder="Password"
                                             type="password"
                                             name="password"
                                             noValidate
                                             onChange={this.handleChange}
                                         />
-                                        {this.state.formErrors.password.length > 0 && (
-                                            <span className="errorMessage">{this.state.formErrors.password}</span>
+                                        {this.state.formErrors.password.length >
+                                            0 && (
+                                            <span className="errorMessage">
+                                                {this.state.formErrors.password}
+                                            </span>
                                         )}
                                     </div>
                                     <div className="createAccount">
-                                        <button type="submit">Create Account</button>
-                                        <small className="link" onClick={this.onClickLogin}>Already Have an Account?</small>                                        
+                                        <button type="submit">
+                                            Create Account
+                                        </button>
+                                        <small
+                                            className="link"
+                                            onClick={this.onClickLogin}
+                                        >
+                                            Already Have an Account?
+                                        </small>
                                         <div>-OR-</div>
                                         <Facebook />
                                     </div>
@@ -403,11 +520,7 @@ class Login extends Component {
             );
         }
 
-        return (
-            <div>
-                {this.content}
-            </div>
-        );
+        return <div>{this.content}</div>;
     }
 }
 

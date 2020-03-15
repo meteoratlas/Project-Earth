@@ -45,7 +45,6 @@ class App extends Component {
         this.game.reflect(a, b, c);
     };
     resetLevel = () => {
-        //this.game.loadLevel(this.game.currentLevel);
         this.game.resetLevel();
     };
 
@@ -84,7 +83,7 @@ class App extends Component {
                         rotates={this.rotate}
                         reflects={this.reflect}
                         resetLevel={this.resetLevel}
-                        firstName={this.props.firstName}
+                        firstName={this.props.firstName || "Guest"}
                         lastName={this.props.lastName}
                         email={this.props.email}
                     />
